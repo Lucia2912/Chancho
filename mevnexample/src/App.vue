@@ -1,11 +1,13 @@
 <template>
   <div class="container">
-   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="max-height: 50px;">
-    <div class="navbar-collapse collapse w-100 dual-collapse2 order-1 order-md-0">
+   <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="max-height: 50px; background-color: #000 !important;">
+  
+    <div class="navbar-collapse collapse w-100 dual-collapse2 order-1 order-md-0" style="margin-left: 20%;">
         <ul class="navbar-nav ml-auto text-center">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" href="#">Chancho va!</a>
             </li>
+           
         </ul>
     </div>
     <div class="mx-auto my-2 order-0 order-md-1 position-relative">
@@ -18,6 +20,16 @@
     </div>
     <div class="navbar-collapse collapse w-100 dual-collapse2 order-2 order-md-2">
         <ul class="navbar-nav mr-auto text-center">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Buscar partidas</a>
+            </li>
+        </ul>
+    </div>
+      <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Right</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Link</a>
             </li>
