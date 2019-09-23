@@ -1,0 +1,561 @@
+<template>
+<div class="container">
+<div class="row">
+    <div class="col-lg-12">
+        <!-- start:lobby -->
+        <div class="box">
+            <div class="chat-room">
+                <!-- start:aside lobby kiri -->
+                <aside class="kiri-side">
+                   
+                    <ul class="chat-list">
+                        <li class="active">
+                            <a class="lobby" href="#lobby.html">
+                                <h4>
+                                    <i class="fa fa-list"></i>
+                                    Lobby
+                                </h4>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat_room.html">
+                                <i class="fa fa-rocket"></i>
+                                <span>Marketing</span>
+                                <i class="fa fa-times pull-right"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat_room.html">
+                                <i class="fa fa-rocket"></i>
+                                <span>Water Cooler</span>
+                                <i class="fa fa-times pull-right"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat_room.html">
+                                <i class="fa fa-rocket"></i>
+                                <span>Design Lounge</span>
+                                <i class="fa fa-times pull-right"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat_room.html">
+                                <i class="fa fa-rocket"></i>
+                                <span>Development</span>
+                                <i class="fa fa-times pull-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <ul class="chat-list chat-user">
+                        <li>
+                            <a href="##">
+                                <i class="fa fa-circle text-success"></i>
+                                <span>Jonathan Smith</span>
+                                <i class="fa fa-times pull-right"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="##">
+                                <i class="fa fa-circle text-success"></i>
+                                <span>Jhon Doe</span>
+                                <i class="fa fa-times pull-right"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="##">
+                                <i class="fa fa-circle text-muted"></i>
+                                <span>Cendy Andrianto</span>
+                                <i class="fa fa-times pull-right"></i>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="##">
+                                <i class="fa fa-circle text-danger"></i>
+                                <span>Tatang Sutrana</span>
+                                <i class="fa fa-times pull-right"></i>
+                            </a>
+                        </li>
+                    </ul>
+                    <footer>
+                        <a class="chat-avatar" href="#javascript:;">
+                            <img alt="" src="https://bootdey.com/img/Content/avatar/avatar1.png">
+                        </a>
+                        <div class="user-status">
+                            <i class="fa fa-circle text-success"></i>
+                            Available
+                        </div>
+                        <a class="chat-dropdown pull-right" href="#javascript:;">
+                            <i class="fa fa-chevron-down"></i>
+                        </a>
+                    </footer>
+                </aside>
+                <!-- end:aside lobby kiri -->
+                <!-- start:aside lobby tengah -->
+                <aside class="tengah-side">
+                   
+                    <div class="room-desk">
+                        <h4 class="pull-left">Sala de espera</h4>
+                        <a href="##" class="pull-right btn btn-default" data-original-title="" title="">+ crear sala</a>
+                        <div class="room-box">
+                            <h5 class="text-primary"><a href="#chat-room.html">Sala 1</a></h5>
+                            <p>Sumate a la diversión ¡No esperes más! <a href="##" class="btn btn-info pull-right" data-original-title="" title="">UNIRME</a> </p>
+                            <p><span class="text-muted">Creador:</span> UsuarioCreador | <span class="text-muted">Miembro :</span> 3</p>
+                        
+                            
+                        </div>
+                    </div>
+                </aside>
+                <!-- end:aside lobby tengah -->
+                <!-- start:aside lobby kanan -->
+                <aside class="kanan-side">
+                    
+                    <div class="invite-row">
+                        <h4 class="pull-left">Chat online</h4>
+                        <a href="##" class="btn btn-dark pull-right" data-original-title="" title="">+ Invite</a>
+                    </div>
+                    
+                    <ul class="chat-available-user">
+                        <li>
+                            <a href="#chat-room.html">
+                                <i class="fa fa-circle text-success"></i>
+                                Jonathan Smith
+                                <span class="text-muted">3h:22m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat-room.html">
+                                <i class="fa fa-circle text-success"></i>
+                                Jhone Due
+                                <span class="text-muted">1h:2m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat-room.html">
+                                <i class="fa fa-circle text-success"></i>
+                                Tatang Sutrana
+                                <span class="text-muted">2h:32m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat-room.html">
+                                <i class="fa fa-circle text-danger"></i>
+                                Cendy Andrianto
+                                <span class="text-muted">3h:22m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat-room.html">
+                                <i class="fa fa-circle text-warning"></i>
+                                Alice Norin
+                                <span class="text-muted">1h:12m</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat-room.html">
+                                <i class="fa fa-circle text-muted"></i>
+                                Steve Jobs
+                                <!--<span class="text-muted">3h:22m</span>-->
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#chat-room.html">
+                                <i class="fa fa-circle text-muted"></i>
+                                Jonathan Smith
+                                <!--<span class="text-muted">3h:22m</span>-->
+                            </a>
+                        </li>
+                    </ul>
+                </aside>
+                <!-- end:aside lobby kanan -->
+            </div>
+        </div>
+        <!-- end:lobby -->
+    </div>
+</div>
+</div>  
+</template>
+
+<style>
+
+
+/*
+    =================================
+    CHAT ROOM
+    =================================
+*/
+
+.chat-room {
+    border-collapse: collapse;
+    border-spacing: 0;
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    position: relative;
+}
+
+
+.chat-room aside {
+    display: table-cell;
+    float: none;
+    height: 100%;
+    padding: 0;
+    vertical-align: top;
+}
+
+.chat-room .kiri-side {
+    width: 25%;
+    background: #e5e8ef;
+    border-radius: 4px 0 0 4px;
+    -webkit-border-radius: 4px 0 0 4px;
+}
+.chat-room .tengah-side {
+    width: 50%;
+    background: #fff;
+    border-right: 1px solid #e5e8ef;
+}
+
+.chat-room .kanan-side {
+    width: 25%;
+    background: #fff;
+}
+
+.chat-room .kiri-side .user-head {
+    background: #39bbdb;
+    color: #FFFFFF;
+    min-height: 70px;
+    padding: 15px;
+}
+.chat-room .kanan-side .user-head {
+    background: #39bbdb;
+    color: #FFFFFF;
+    min-height: 70px;
+    padding: 10px;
+    border-left: 1px solid #39bbdb;
+    margin-left: -1px;
+    position: relative;
+}
+
+
+.chat-room .user-head i {
+    float: left;
+    font-size: 40px;
+    margin-right: 10px;
+}
+
+.chat-room .user-head h3 {
+    margin: 6px 0 0 0;
+    font-weight: 100;
+    letter-spacing: 1px;
+}
+
+.chat-room-head {
+    background: #39bbdb;
+    color: #FFFFFF;
+    min-height: 70px;
+    padding: 15px;
+}
+
+.chat-room-head h3 {
+    margin: 5px 0 0;
+    font-weight: 100;
+    letter-spacing: 1px;
+    display: inline-block;
+}
+
+.chat-room-head .search-btn {
+    width: 20px;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    box-shadow: none;
+    background: #eee;
+    padding:0 5px 0 35px;
+    margin-top: 2px;
+    border: none;
+    color: #fff;
+}
+
+.chat-room-head .search-btn:focus {
+    width: 180px;
+    box-shadow: none;
+    -webkit-transition: all .3s ease;
+    -moz-transition: all .3s ease;
+    -ms-transition: all .3s ease;
+    -o-transition: all .3s ease;
+    transition: all .3s ease;
+    /*background: #01a6b2;*/
+    font-weight: 300;
+    color: #fff;
+}
+
+.chat-room-head .search-btn:focus::-moz-placeholder {
+    color: #fff;
+}
+
+
+ul.chat-list li a {
+    color: #6a6a6a;
+    display: block;
+    padding: 15px;
+    font-weight: 300;
+    text-decoration: none;
+}
+ul.chat-list li a:hover, ul.chat-list li.active a {
+    color: #00a9b4;
+    background: #f2f4f7;
+}
+
+ul.chat-list li h4 {
+    padding: 17px 15px;
+    margin: 0;
+    font-size: 14px;
+    font-weight: 600;
+    border-bottom: 1px solid #D5D7DE;
+}
+
+ul.chat-list li h4 i {
+    padding-right: 5px;
+}
+
+ul.chat-list li a span {
+    padding-left: 10px;
+}
+
+ul.chat-list li a i.fa-times {
+    color: #9fa3b0;
+}
+
+ul.chat-list li.active {
+    color: #00a9b4;
+    background: #f2f4f7;
+}
+
+ul.chat-list {
+    border-bottom: 1px solid #d5d7de;
+    padding-left: 0;
+    list-style: none;
+}
+
+ul.chat-user  {
+    margin-bottom: 200px;
+}
+
+ul.chat-user li {
+    border-bottom: none;
+}
+
+ul.chat-user li a:hover{
+    background: none;
+    color: #6a6a6a;
+}
+
+.chat-room .kiri-side footer {
+    background: #d5d7de;
+    padding: 15px;
+    height: 70px;
+    width: 25%;
+    position: absolute;
+    bottom: 0;
+}
+
+.chat-room .tengah-side footer {
+    background: #f6f6f6;
+    padding: 15px;
+    height: 70px;
+    width: 50%;
+    position: absolute;
+    bottom: 0;
+    border-right: 1px solid #E5E8EF;
+}
+
+.chat-room .kanan-side footer {
+    background: #fff;
+    padding: 15px;
+    height: 70px;
+    width: 25%;
+    position: absolute;
+    bottom: 0;
+    border-top: 1px solid #E5E8EF;
+}
+
+.chat-room .kiri-side footer .chat-avatar img {
+    width: 40px;
+    height: 40px;
+    border: 2px solid #fff;
+    float: left;
+}
+
+.chat-room .kiri-side footer .user-status {
+    float: left;
+    margin: 10px;
+}
+
+.chat-room .kiri-side footer .user-status i {
+    padding-right: 5px;
+}
+
+.chat-room .left-side footer a.chat-dropdown {
+    background: #96979a;
+    border-radius: 2px;
+    color: #fff;
+    font-size: 10px;
+    margin-top: 10px;
+    padding: 3px 5px;
+}
+
+.room-desk {
+    display: inline-block;
+    margin-bottom: 30px;
+    width: 100%;
+    padding: 15px;
+}
+
+.room-desk h4 {
+    text-transform: uppercase;
+    font-weight: 300;
+    font-size: 16px;
+    margin: 5px 0 0 0;
+}
+
+.room-box {
+    border: 1px solid #f7f8fa;
+    background: #f7f8fa;
+    padding: 10px;
+    display: inline-block;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.room-box h5 {
+    margin: 0 0 5px 0;
+    font-weight: 300;
+    font-size: 16px;
+}
+.room-box h5 a {
+    color: #00a9b4;
+}
+
+.chat-tools {
+    float: right;
+    padding: 3px;
+    width: 40px;
+    height: 35px;
+    line-height: 30px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    text-align: center;
+    margin-top: 6px;
+    margin-left: 10px;
+}
+
+.chat-tools i {
+    font-size: 16px !important;
+    float: none !important;
+    margin-right: 0 !important;
+    color: #fff;
+}
+
+.btn-key {
+    background: #1abc9c;
+}
+
+.btn-key:hover {
+    background: #16a085;
+}
+
+.invite-row {
+    background: #E5E8EF;
+    padding: 6px 10px;
+    display: inline-block;
+    width: 100%;
+}
+
+.invite-row h4 {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+ul.chat-available-user {
+    padding: 10px;
+    list-style: none;
+}
+
+ul.chat-available-user li {
+    margin-bottom: 15px;
+}
+
+ul.chat-available-user li a {
+    color: #6a6a6a;
+    text-decoration: none;
+}
+ul.chat-available-user li i {
+    padding-right: 5px;
+    font-size: 10px;
+}
+
+.group-rom {
+    width: 100%;
+    float: left;
+    border-bottom: 1px solid #eaebee;
+}
+
+.group-rom .first-part,
+.group-rom .second-part,
+.group-rom .third-part {
+    float: left;
+    padding: 15px;
+}
+
+.group-rom .first-part {
+    width: 25%;
+}
+
+.group-rom .first-part.odd {
+    background: #f7f8fa;
+    color: #6a6a6a;
+    font-weight: 600;
+}
+
+.group-rom .second-part{
+    width: 60%;
+}
+
+.group-rom .third-part{
+    width: 15%;
+    color: #d4d3d3;
+}
+
+
+a.guest-on {
+    color: #6a6a6a;
+    margin-top: 8px;
+    display: inline-block;
+}
+
+a.guest-on i {
+    background: #40cabe;
+    color: #fff;
+    padding: 4px;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    margin-right: 5px;
+}
+
+.chat-txt {
+    float: left;
+    width: 70%;
+    margin-right: 5px;
+}
+
+.lobby {
+    padding: 0 !important;
+}
+                                                 
+</style>
+
+<script>
+    export default{
+    }
+</script>
