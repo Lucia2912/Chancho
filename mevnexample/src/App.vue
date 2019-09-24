@@ -20,18 +20,24 @@
     </div>
     <div class="navbar-collapse collapse w-100 dual-collapse2 order-2 order-md-2">
         <ul class="navbar-nav mr-auto text-center">
-            <li class="nav-item">
+            <li class="nav-item" v-if="auth=='loggeding'">
                 <a class="nav-link" href="#">Buscar partidas</a>
             </li>
         </ul>
     </div>
       <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
         <ul class="navbar-nav ml-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="#">Right</a>
+            <li class="nav-item" v-if="auth=='loggedin'">
+                <router-link class="nav-link" to="/miperfil">Mi perfil</router-link>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+            <li class="nav-item" v-if="auth=='loggedin'">
+                <a class="nav-link" href="" v-on:click="logout">Salir</a> 
+            </li>
+            <li class="nav-item" v-if="auth==''">
+                <router-link class="nav-link" to="/registrarse">Registrarse</router-link>
+            </li>
+             <li class="nav-item" v-if="auth==''">
+                <router-link class="nav-link" to="/login">Login</router-link>
             </li>
         </ul>
     </div>
@@ -54,7 +60,26 @@
 </style>
 
 <script>
-
+    import EventBus from './components/EventBus';
+    EventBus.$on('logged-in', test => {
+        console.log(test);
+    })
     export default{
+        data(){
+            return{
+                auth: '',
+                user: ''
+            }
+        },
+        methods: {
+            logout(){
+                localStorage.removeItem('userToken');
+            }
+        },
+        mounted(){
+            EventBus.$on('logged-in', status => {
+                this.auth = status;
+            })
+        }
     }
 </script>

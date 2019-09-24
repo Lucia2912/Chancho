@@ -30,6 +30,9 @@ import CreateComponent from './components/CreateComponent.vue';
 import IndexComponent from './components/IndexComponent.vue';
 import EditComponent from './components/EditComponent.vue';
 import lobitCompnent from './components/lobit.vue';
+import login from './components/Login.vue';
+import registrarse from './components/Register.vue';
+import miperfil from './components/Perfil.vue';
 
 
 const routes = [
@@ -57,7 +60,22 @@ const routes = [
     name: 'lobby',
     path: '/lobby',
     component: lobitCompnent
-}
+},
+{
+    name: 'registrarse',
+    path: '/registrarse',
+    component: registrarse
+},
+{
+    name: 'login',
+    path: '/login',
+    component: login
+},
+{
+    name: 'miperfil',
+    path: '/miperfil',
+    component: miperfil
+},
 ];
 
 const router = new VueRouter({ mode: 'history', routes: routes});
