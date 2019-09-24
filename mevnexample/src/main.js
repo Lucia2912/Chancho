@@ -7,6 +7,10 @@ import { faUserSecret, faUser } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarCheck  } from '@fortawesome/free-regular-svg-icons'
 import { faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import 'deck-of-cards/example/example.css';
+import cardeame from 'deck-of-cards'
+Vue.use(cardeame);
+//Object.defineProperty(Vue.prototype, '$cardeame', { value: cardeame});
 library.add(faUserSecret, faUser)
 library.add(faFontAwesome)
 library.add(faCalendarCheck)
@@ -34,6 +38,7 @@ import login from './components/Login.vue';
 import registrarse from './components/Register.vue';
 import miperfil from './components/Perfil.vue';
 
+import PartidaComponent from './components/PartidaComponent.vue';
 
 const routes = [
   {
@@ -76,6 +81,11 @@ const routes = [
     path: '/miperfil',
     component: miperfil
 },
+{
+    name: 'partida',
+    path: '/partida',
+    component: PartidaComponent
+}
 ];
 
 const router = new VueRouter({ mode: 'history', routes: routes});
