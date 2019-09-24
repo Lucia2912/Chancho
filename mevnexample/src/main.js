@@ -7,6 +7,10 @@ import { faUserSecret, faUser } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarCheck  } from '@fortawesome/free-regular-svg-icons'
 import { faFontAwesome } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import 'deck-of-cards/example/example.css';
+import cardeame from 'deck-of-cards'
+Vue.use(cardeame);
+//Object.defineProperty(Vue.prototype, '$cardeame', { value: cardeame});
 library.add(faUserSecret, faUser)
 library.add(faFontAwesome)
 library.add(faCalendarCheck)
@@ -30,7 +34,7 @@ import CreateComponent from './components/CreateComponent.vue';
 import IndexComponent from './components/IndexComponent.vue';
 import EditComponent from './components/EditComponent.vue';
 import lobitCompnent from './components/lobit.vue';
-
+import PartidaComponent from './components/PartidaComponent.vue';
 
 const routes = [
   {
@@ -57,6 +61,11 @@ const routes = [
     name: 'lobby',
     path: '/lobby',
     component: lobitCompnent
+},
+{
+    name: 'partida',
+    path: '/partida',
+    component: PartidaComponent
 }
 ];
 

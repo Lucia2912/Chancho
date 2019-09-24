@@ -6,102 +6,19 @@
         <div class="box">
             <div class="chat-room">
                 <!-- start:aside lobby kiri -->
-                <aside class="kiri-side">
-                   
-                    <ul class="chat-list">
-                        <li class="active">
-                            <a class="lobby" href="#lobby.html">
-                                <h4>
-                                    <i class="fa fa-list"></i>
-                                    Lobby
-                                </h4>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat_room.html">
-                                <i class="fa fa-rocket"></i>
-                                <span>Marketing</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat_room.html">
-                                <i class="fa fa-rocket"></i>
-                                <span>Water Cooler</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat_room.html">
-                                <i class="fa fa-rocket"></i>
-                                <span>Design Lounge</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat_room.html">
-                                <i class="fa fa-rocket"></i>
-                                <span>Development</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <ul class="chat-list chat-user">
-                        <li>
-                            <a href="##">
-                                <i class="fa fa-circle text-success"></i>
-                                <span>Jonathan Smith</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="##">
-                                <i class="fa fa-circle text-success"></i>
-                                <span>Jhon Doe</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="##">
-                                <i class="fa fa-circle text-muted"></i>
-                                <span>Cendy Andrianto</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="##">
-                                <i class="fa fa-circle text-danger"></i>
-                                <span>Tatang Sutrana</span>
-                                <i class="fa fa-times pull-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <footer>
-                        <a class="chat-avatar" href="#javascript:;">
-                            <img alt="" src="https://bootdey.com/img/Content/avatar/avatar1.png">
-                        </a>
-                        <div class="user-status">
-                            <i class="fa fa-circle text-success"></i>
-                            Available
-                        </div>
-                        <a class="chat-dropdown pull-right" href="#javascript:;">
-                            <i class="fa fa-chevron-down"></i>
-                        </a>
-                    </footer>
-                </aside>
                 <!-- end:aside lobby kiri -->
                 <!-- start:aside lobby tengah -->
                 <aside class="tengah-side">
                    
                     <div class="room-desk">
                         <h4 class="pull-left">Sala de espera</h4>
-                        <a href="##" class="pull-right btn btn-default" data-original-title="" title="">+ crear sala</a>
-                        <div class="room-box">
-                            <h5 class="text-primary"><a href="#chat-room.html">Sala 1</a></h5>
-                            <p>Sumate a la diversión ¡No esperes más! <a href="##" class="btn btn-info pull-right" data-original-title="" title="">UNIRME</a> </p>
-                            <p><span class="text-muted">Creador:</span> UsuarioCreador | <span class="text-muted">Miembro :</span> 3</p>
+                        <a @click="addRow('xD')" class="pull-right btn btn-default" data-original-title="" title="">+ crear sala</a>
                         
-                            
+                        <div v-for="(input, index) in inputs" v-bind:key="input.one" class="room-box">
+                            <h5 class="text-primary"><a href="#chat-room.html">Sala 1</a></h5>
+                            <p>Entren gurices no se jugar pero mi id es {{ input.one }}<a href="##" class="btn btn-info pull-right" data-original-title="" title="">UNIRME</a> </p>
+                            <p><span class="text-muted">Creador: </span> UsuarioCreador | <span class="text-muted">Miembros: </span> 3</p>
+                            <button type="button" class="btn btn-danger" @click="deleteRow(index)">Quitar</button>
                         </div>
                     </div>
                 </aside>
@@ -557,5 +474,24 @@ a.guest-on i {
 
 <script>
     export default{
+        data(){
+            return{
+            inputs:[]
+            
+            };
+        },
+        created(){
+
+        }, 
+    methods: {
+        addRow(txt){
+      this.inputs.push({
+        one: txt
+      });
+    },
+    deleteRow(index){
+      this.inputs.splice(index,1);
+    },
     }
+    };
 </script>
