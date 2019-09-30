@@ -20,8 +20,8 @@
     </div>
     <div class="navbar-collapse collapse w-100 dual-collapse2 order-2 order-md-2">
         <ul class="navbar-nav mr-auto text-center">
-            <li class="nav-item" v-if="auth=='loggeding'">
-                <a class="nav-link" href="#">Buscar partidas</a>
+            <li class="nav-item" v-if="auth=='loggedin'">
+                <router-link class="nav-link" to="/lobby">Buscar partidas</router-link>
             </li>
         </ul>
     </div>
@@ -73,7 +73,7 @@
         },
         methods: {
             logout(){
-                localStorage.removeItem('userToken');
+                localStorage.removeItem('usertoken');
                 this.$router.push({name: 'login'});
             }
         },

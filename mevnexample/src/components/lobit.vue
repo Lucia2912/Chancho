@@ -16,7 +16,7 @@
                         
                         <div v-for="(input, index) in inputs" v-bind:key="input.one" class="room-box">
                             <h5 class="text-primary"><a href="#chat-room.html">Sala 1</a></h5>
-                            <p>Entren gurices no se jugar pero mi id es {{ input.one }}<a href="##" class="btn btn-info pull-right" data-original-title="" title="">UNIRME</a> </p>
+                            <p>Jugar<a href="##" class="btn btn-info pull-right" data-original-title="" title="">UNIRME</a> </p>
                             <p><span class="text-muted">Creador: </span> UsuarioCreador | <span class="text-muted">Miembros: </span> 3</p>
                             <button type="button" class="btn btn-danger" @click="deleteRow(index)">Quitar</button>
                         </div>
@@ -28,16 +28,16 @@
                     
                     <div class="invite-row">
                         <h4 class="pull-left">Chat online</h4>
-                        <a href="##" class="btn btn-dark pull-right" data-original-title="" title="">+ Invite</a>
+                        <a href="##" class="btn btn-dark pull-right" data-original-title="" title="">+ Invitar</a>
                     </div>
                     
-                    <ul class="chat-available-user">
+                   <!-- <ul class="chat-available-user">
                         <li>
                             <a href="#chat-room.html">
                                 <i class="fa fa-circle text-success"></i>
                                 Jonathan Smith
-                                <span class="text-muted">3h:22m</span>
-                            </a>
+                                <span class="text-muted">3h:22m</span> 
+                            </a> 
                         </li>
                         <li>
                             <a href="#chat-room.html">
@@ -71,17 +71,17 @@
                             <a href="#chat-room.html">
                                 <i class="fa fa-circle text-muted"></i>
                                 Steve Jobs
-                                <!--<span class="text-muted">3h:22m</span>-->
+                                <span class="text-muted">3h:22m</span>
                             </a>
                         </li>
                         <li>
                             <a href="#chat-room.html">
                                 <i class="fa fa-circle text-muted"></i>
                                 Jonathan Smith
-                                <!--<span class="text-muted">3h:22m</span>-->
+                                <span class="text-muted">3h:22m</span>
                             </a>
                         </li>
-                    </ul>
+                    </ul> -->
                 </aside>
                 <!-- end:aside lobby kanan -->
             </div>

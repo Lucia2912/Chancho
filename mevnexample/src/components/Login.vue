@@ -47,6 +47,12 @@ export default {
     },
     methods: {
       login(){
+          let vm = this.hasErrors;
+          vm.correo = false;
+          vm.cont = false;
+          let _vm = this.errorMessage;
+          _vm.correo = null;
+          _vm.cont = null;
     let uri = 'http://localhost:4000/user/login';
     this.axios.post(uri, this.usuario).then(res => {
        localStorage.setItem('usertoken', res.data);
