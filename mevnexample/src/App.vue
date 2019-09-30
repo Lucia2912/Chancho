@@ -74,6 +74,7 @@
         methods: {
             logout(){
                 localStorage.removeItem('userToken');
+                this.$router.push({name: 'login'});
             }
         },
         mounted(){

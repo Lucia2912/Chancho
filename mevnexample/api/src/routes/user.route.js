@@ -63,10 +63,16 @@ users.post('/login', (req, res) => {
                 })
                 res.send(token);
             } else {
-                res.json({error: 'El usuario no existe'});
+                let errores = {errors:{pass: 'Contraseña incorrecta'}};
+                res.setHeader('Content-Type', 'application/json');
+                res.statusCode = 422;
+                res.send(errores);
             }
         } else {
-            res.json({error: 'El usuario no existe'});
+            let errores = {errors:{email: 'El usuario no existe'}};
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 422;
+            res.send(errores);
         }
     })
     .catch(err => {
