@@ -79,7 +79,11 @@
         mounted(){
             EventBus.$on('logged-in', status => {
                 this.auth = status;
-            })
+            });
+
+            EventBus.$on('partida', data => {
+                console.log(data);
+            });
         }
     }
 </script>
