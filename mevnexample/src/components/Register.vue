@@ -55,6 +55,7 @@ export default {
     })
     .catch(error => {
         let err = error.response;
+        console.log(error);
         if (err.statusText === "Unprocessable Entity") {
             if (err.data) {
                   if (err.data.errors.email) {

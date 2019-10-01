@@ -59,14 +59,20 @@ users.post('/login', (req, res) => {
                     email: user.email
                 }
                 let token = jwt.sign(payload, process.env.SECRET_KEY, {
-                    expiresIn: 1440
+                    expiresIn: 86400
                 })
                 res.send(token);
             } else {
-                res.json({error: 'El usuario no existe'});
+                let errores = {errors:{pass: 'Contraseña incorrecta'}};
+                res.setHeader('Content-Type', 'application/json');
+                res.statusCode = 422;
+                res.send(errores);
             }
         } else {
-            res.json({error: 'El usuario no existe'});
+            let errores = {errors:{email: 'El usuario no existe'}};
+            res.setHeader('Content-Type', 'application/json');
+            res.statusCode = 422;
+            res.send(errores);
         }
     })
     .catch(err => {
