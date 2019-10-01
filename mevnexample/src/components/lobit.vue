@@ -1,37 +1,37 @@
 <template>
 <div class="container">
-<div class="row">
-    <div class="col-lg-12">
-        <!-- start:lobby -->
-        <div class="box">
-            <div class="chat-room">
-                <!-- start:aside lobby kiri -->
-                <!-- end:aside lobby kiri -->
-                <!-- start:aside lobby tengah -->
-                <aside class="tengah-side">
-                   
-                    <div class="room-desk">
-                        <h4 class="pull-left">Sala de espera</h4>
-                        <a @click="addRow('xD')" class="pull-right btn btn-default" data-original-title="" title="">+ crear sala</a>
-                        
-                        <div v-for="(input, index) in inputs" v-bind:key="input.one" class="room-box">
-                            <h5 class="text-primary"><a href="#chat-room.html">Sala 1</a></h5>
-                            <p>Jugar<a href="##" class="btn btn-info pull-right" data-original-title="" title="">UNIRME</a> </p>
-                            <p><span class="text-muted">Creador: </span> UsuarioCreador | <span class="text-muted">Miembros: </span> 3</p>
-                            <button type="button" class="btn btn-danger" @click="deleteRow(index)">Quitar</button>
+    <div class="row">
+        <div class="col-lg-12">
+            <!-- start:lobby -->
+            <div class="box">
+                <div class="chat-room">
+                    <!-- start:aside lobby kiri -->
+                    <!-- end:aside lobby kiri -->
+                    <!-- start:aside lobby tengah -->
+                    <aside class="tengah-side">
+
+                        <div class="room-desk">
+                            <h4 class="pull-left">Sala de espera</h4>
+                            <a @click="addRow('xD')" class="pull-right btn btn-default" data-original-title="" title="">+ crear sala</a>
+
+                            <div v-for="(input, index) in inputs" v-bind:key="input.one" class="room-box">
+                                <h5 class="text-primary"><a href="#chat-room.html">Sala 1</a></h5>
+                                <p>Jugar<a href="##" class="btn btn-info pull-right" data-original-title="" title="">UNIRME</a> </p>
+                                <p><span class="text-muted">Creador: </span> UsuarioCreador | <span class="text-muted">Miembros: </span> 3</p>
+                                <button type="button" class="btn btn-danger" @click="deleteRow(index)">Quitar</button>
+                            </div>
                         </div>
-                    </div>
-                </aside>
-                <!-- end:aside lobby tengah -->
-                <!-- start:aside lobby kanan -->
-                <aside class="kanan-side">
-                    
-                    <div class="invite-row">
-                        <h4 class="pull-left">Chat online</h4>
-                        <a href="##" class="btn btn-dark pull-right" data-original-title="" title="">+ Invitar</a>
-                    </div>
-                    
-                   <!-- <ul class="chat-available-user">
+                    </aside>
+                    <!-- end:aside lobby tengah -->
+                    <!-- start:aside lobby kanan -->
+                    <aside class="kanan-side">
+
+                        <div class="invite-row">
+                            <h4 class="pull-left">Chat online</h4>
+                            <chatsito></chatsito>
+                        </div>
+
+                        <!-- <ul class="chat-available-user">
                         <li>
                             <a href="#chat-room.html">
                                 <i class="fa fa-circle text-success"></i>
@@ -82,19 +82,17 @@
                             </a>
                         </li>
                     </ul> -->
-                </aside>
-                <!-- end:aside lobby kanan -->
+                    </aside>
+                    <!-- end:aside lobby kanan -->
+                </div>
             </div>
+            <!-- end:lobby -->
         </div>
-        <!-- end:lobby -->
     </div>
 </div>
-</div>  
 </template>
 
 <style>
-
-
 /*
     =================================
     CHAT ROOM
@@ -110,7 +108,6 @@
     position: relative;
 }
 
-
 .chat-room aside {
     display: table-cell;
     float: none;
@@ -125,6 +122,7 @@
     border-radius: 4px 0 0 4px;
     -webkit-border-radius: 4px 0 0 4px;
 }
+
 .chat-room .tengah-side {
     width: 50%;
     background: #fff;
@@ -142,6 +140,7 @@
     min-height: 70px;
     padding: 15px;
 }
+
 .chat-room .kanan-side .user-head {
     background: #39bbdb;
     color: #FFFFFF;
@@ -151,7 +150,6 @@
     margin-left: -1px;
     position: relative;
 }
-
 
 .chat-room .user-head i {
     float: left;
@@ -188,7 +186,7 @@
     transition: all .3s ease;
     box-shadow: none;
     background: #eee;
-    padding:0 5px 0 35px;
+    padding: 0 5px 0 35px;
     margin-top: 2px;
     border: none;
     color: #fff;
@@ -211,7 +209,6 @@
     color: #fff;
 }
 
-
 ul.chat-list li a {
     color: #6a6a6a;
     display: block;
@@ -219,7 +216,9 @@ ul.chat-list li a {
     font-weight: 300;
     text-decoration: none;
 }
-ul.chat-list li a:hover, ul.chat-list li.active a {
+
+ul.chat-list li a:hover,
+ul.chat-list li.active a {
     color: #00a9b4;
     background: #f2f4f7;
 }
@@ -255,7 +254,7 @@ ul.chat-list {
     list-style: none;
 }
 
-ul.chat-user  {
+ul.chat-user {
     margin-bottom: 200px;
 }
 
@@ -263,7 +262,7 @@ ul.chat-user li {
     border-bottom: none;
 }
 
-ul.chat-user li a:hover{
+ul.chat-user li a:hover {
     background: none;
     color: #6a6a6a;
 }
@@ -350,6 +349,7 @@ ul.chat-user li a:hover{
     font-weight: 300;
     font-size: 16px;
 }
+
 .room-box h5 a {
     color: #00a9b4;
 }
@@ -407,6 +407,7 @@ ul.chat-available-user li a {
     color: #6a6a6a;
     text-decoration: none;
 }
+
 ul.chat-available-user li i {
     padding-right: 5px;
     font-size: 10px;
@@ -435,15 +436,14 @@ ul.chat-available-user li i {
     font-weight: 600;
 }
 
-.group-rom .second-part{
+.group-rom .second-part {
     width: 60%;
 }
 
-.group-rom .third-part{
+.group-rom .third-part {
     width: 15%;
     color: #d4d3d3;
 }
-
 
 a.guest-on {
     color: #6a6a6a;
@@ -469,29 +469,57 @@ a.guest-on i {
 .lobby {
     padding: 0 !important;
 }
-                                                 
 </style>
 
 <script>
-    export default{
-        data(){
-            return{
-            inputs:[]
-            
-            };
-        },
-        created(){
-
-        }, 
+import chatsito from './Chat';
+import * as io from 'socket.io-client'
+import jwtDecode from 'jwt-decode';
+export default {
+    components:{
+        chatsito
+    },
+    data() {
+        const token = localStorage.usertoken;
+        const decode = jwtDecode(token);
+        return {
+            usuario: decode,
+            inputs: [],
+            errors: [],
+            chat: {},
+            rooms:[],
+            socket: io('http://localhost:4000')
+        };
+    },
+    created() {
+        this.axios.get(`http://localhost:4000/room`)
+    .then(response => {
+      this.rooms = response.data
+      console.log(this.rooms);
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+    },
+    mounted() {
+        this.chat.message = this.usuario.nickname + ' join the room'
+      this.axios.post(`http://localhost:4000/chat`, this.chat)
+      .then(response => {
+        this.socket.emit('save-message', { nickname: this.usuario.nickname, message: 'Join this room', created_date: new Date() });
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
     methods: {
-        addRow(txt){
-      this.inputs.push({
-        one: txt
-      });
-    },
-    deleteRow(index){
-      this.inputs.splice(index,1);
-    },
+        addRow(txt) {
+            this.inputs.push({
+                one: txt
+            });
+        },
+        deleteRow(index) {
+            this.inputs.splice(index, 1);
+        },
     }
-    };
+};
 </script>

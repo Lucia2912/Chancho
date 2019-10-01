@@ -10,6 +10,8 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import 'deck-of-cards/example/example.css';
 import cardeame from 'deck-of-cards'
 Vue.use(cardeame);
+import VueChatScroll from 'vue-chat-scroll'
+Vue.use(VueChatScroll)
 //Object.defineProperty(Vue.prototype, '$cardeame', { value: cardeame});
 library.add(faUserSecret, faUser)
 library.add(faFontAwesome)

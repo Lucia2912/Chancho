@@ -6,8 +6,8 @@ const mongoose = require('mongoose');
 const config = require('./DB.js');
 const postRoute = require('./routes/post.route');
 const userRoute = require('./routes/user.route');
-
-
+const chatRoute = require('./routes/chat.route');
+const roomRoute = require('./routes/room.route');
 
 
 app.use(cors());
@@ -22,7 +22,8 @@ mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use('/posts', postRoute);
 app.use('/user', userRoute);
-
+app.use('/chat', chatRoute);
+app.use('/room', roomRoute);
 let server = app.listen(PORT, function(){
   console.log('Servidor en puerto:',PORT);
 });
@@ -97,9 +98,16 @@ let manoActual = [ases, dos, tres, cuatro];
     		io.sockets.emit('cambiarDeLugarCarta',cartasAMover);
     		losCuatroMovieronCartas = 0;
     	}
-
-
     });
+});
 
-
+io.on('connectionChat', function (socket) {
+  console.log('User connected');
+  socket.on('disconnectChat', function() {
+    console.log('User disconnected');
+  });
+  socket.on('save-message', function (data) {
+    console.log(data);
+    io.emit('new-message', { message: data });
+  });
 });
