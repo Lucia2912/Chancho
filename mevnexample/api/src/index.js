@@ -59,14 +59,13 @@ let cartaJugador4 = [];
 
 
 io.sockets.on('connection', function (socket) {
-console.log("se conecta bien");
-console.log(socket.id);
+
 
 socket.emit("welcome", "probando");
 
 socket.on('getIdJugador', function(socket){
   if(idJugador <= 3){
-    console.log(idJugador);
+    
   io.sockets.emit("idJugador", idJugador);
   idJugador++;
   }
