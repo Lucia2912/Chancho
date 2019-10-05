@@ -13,7 +13,136 @@ import Deck from 'deck-of-cards/dist/deck';
 
 import io from 'socket.io-client';
 
+let cartaElegidosa;
+let idJugadoroso;
+let divoso;
+//let esteDeckardo;
+
 import EventBus from './EventBus';
+
+
+function seleccionarCarta(alturita, posicionIzquierda, esteDeckardo){
+ let misCartas = document.getElementsByClassName('face');
+
+
+  for(let c = 0; c<misCartas.length; c++){
+  
+  misCartas[c].onclick = function(){
+
+
+  let misCartas = document.getElementsByClassName('face');
+
+let pintameElBorde = true;
+  let primerValor = misCartas[c].parentElement.style.transform.replace(/^\D+|\D.*$/g, "");
+ 
+  //var ultimoValor = misCartas[c].parentElement.style.transform.replace(/.*\D(?=\d)|\D+$/g, "");
+  //var ultimoValorcito = misCartas[c].parentElement.style.transform.replace(/([^\/,\s]+)(-?\D+$)/g, "");
+ if(posicionIzquierda){
+  primerValor = "-"+primerValor;
+
+ }
+var ultimoValorcito = misCartas[c].parentElement.style.transform.replace(/.*\D(?=\W\d)|\D+$/g,"");
+
+  //.*\D(?=-\d)|\D+$
+
+  //falta convertir esto  a expresion regular bien que saque numeros negativos
+ //var ultimoValor = ultimoValorcito.substring(0, ultimoValorcito.length - 1);
+
+  let valorEntero = parseInt(ultimoValorcito,10);
+
+  let convirtiendoNumero =Number(ultimoValorcito);
+
+
+ 
+  if(convirtiendoNumero != alturita){
+
+ 
+  valorEntero = alturita;
+ pintameElBorde = false;
+ }else{
+  valorEntero = alturita - 20;
+  //esto es para bajar las otras cartas cuando una está seleccionada
+  for(let k = 0; k<misCartas.length; k++){
+    let primerValorOtras = misCartas[k].parentElement.style.transform.replace(/^\D+|\D.*$/g, "");
+    if(posicionIzquierda){
+      primerValorOtras = "-"+primerValorOtras;
+    }
+        var ultimoValorOtras = misCartas[k].parentElement.style.transform.replace(/([^\/,\s]+)(-?\D+$)/g, "");
+  let valorEnteroOtras = parseInt(ultimoValorOtras,10);
+  if(valorEnteroOtras != alturita){
+    valorEnteroOtras = alturita;
+    misCartas[k].parentElement.style.transform = "translate("+primerValorOtras+"px,"+valorEnteroOtras.toString()+"px)";
+    misCartas[k].parentElement.style.border = "";
+  }
+  }
+ }
+
+  misCartas[c].parentElement.style.transform = "translate("+primerValor+"px,"+valorEntero.toString()+"px)";
+  if(pintameElBorde){
+    misCartas[c].parentElement.style.border = "solid";
+  }
+    else{
+misCartas[c].parentElement.style.border = "";
+  }
+
+/*
+palos de las cartas (suit)
+0 = picas
+1 = corazones
+2 = treboles
+3 = diamantes
+
+el atributo "rank" es el valor de la carta
+*/
+let paloABuscar;
+let valorDeCarta;
+let padre = misCartas[c].parentElement;
+if(padre.classList.contains("hearts")){
+ paloABuscar = 1;
+
+}else if(padre.classList.contains("spades")){
+paloABuscar = 0;
+}else if(padre.classList.contains("clubs")){
+paloABuscar = 2;
+}else{
+  paloABuscar = 3;
+}
+
+
+if(padre.classList.contains("rank1")){
+valorDeCarta = 1;
+}else if(padre.classList.contains("rank2")){
+  valorDeCarta = 2;
+}else if(padre.classList.contains("rank3")){
+  valorDeCarta = 3;
+}else{
+  valorDeCarta = 4;
+}
+
+
+esteDeckardo.cards.forEach(function (card, i) {
+  if(card.rank == valorDeCarta && card.suit == paloABuscar){
+
+  divoso = misCartas[c];
+  cartaElegidosa = card;
+  }
+});
+
+
+};
+//});
+
+
+}
+
+};
+
+
+
+
+
+
+
 export default {
  data(){
    return{
@@ -40,6 +169,7 @@ let yaEntroCero = false;
 
 let esteSocket = this.socket;
 let esteDeck = this.deck;
+//esteDeckardo =this.deck;
 let estaCartaElegida = this.cartaElegida;
 let esteDivElegido = this.divElegido;
 
@@ -56,6 +186,7 @@ this.socket.emit('getIdJugador');
     idJugadorExtra = data;
     esteSocket.emit('tieneId');
     this.idJugador = idJugador;
+    idJugadoroso = idJugador;
   });
 
 let contador = 0;
@@ -212,7 +343,7 @@ let entro = false;
           x: valorX +contador,
           y: valorY,
           onComplete: function onComplete(){
-             seleccionarCarta(valorY, esIzquierda);
+             seleccionarCarta(valorY, esIzquierda,esteDeck);
           }
         });
                 }else{
@@ -249,145 +380,20 @@ entro = true;
 });
 
 
-function seleccionarCarta(alturita, posicionIzquierda){
- let misCartas = document.getElementsByClassName('face');
-
-
-  for(let c = 0; c<misCartas.length; c++){
- 
-
-  misCartas[c].onclick = function(){
-
-
-  let misCartas = document.getElementsByClassName('face');
-
-let pintameElBorde = true;
-  let primerValor = misCartas[c].parentElement.style.transform.replace(/^\D+|\D.*$/g, "");
- 
-  //var ultimoValor = misCartas[c].parentElement.style.transform.replace(/.*\D(?=\d)|\D+$/g, "");
-  //var ultimoValorcito = misCartas[c].parentElement.style.transform.replace(/([^\/,\s]+)(-?\D+$)/g, "");
- if(posicionIzquierda){
-  primerValor = "-"+primerValor;
-
- }
-var ultimoValorcito = misCartas[c].parentElement.style.transform.replace(/.*\D(?=\W\d)|\D+$/g,"");
-
-  //.*\D(?=-\d)|\D+$
-
-  //falta convertir esto  a expresion regular bien que saque numeros negativos
- //var ultimoValor = ultimoValorcito.substring(0, ultimoValorcito.length - 1);
-
-  let valorEntero = parseInt(ultimoValorcito,10);
-
-  let convirtiendoNumero =Number(ultimoValorcito);
-
-
- 
-  if(convirtiendoNumero != alturita){
-
- 
-  valorEntero = alturita;
- pintameElBorde = false;
- }else{
-  valorEntero = alturita - 20;
-  //esto es para bajar las otras cartas cuando una está seleccionada
-  for(let k = 0; k<misCartas.length; k++){
-    let primerValorOtras = misCartas[k].parentElement.style.transform.replace(/^\D+|\D.*$/g, "");
-    if(posicionIzquierda){
-      primerValorOtras = "-"+primerValorOtras;
-    }
-        var ultimoValorOtras = misCartas[k].parentElement.style.transform.replace(/([^\/,\s]+)(-?\D+$)/g, "");
-  let valorEnteroOtras = parseInt(ultimoValorOtras,10);
-  if(valorEnteroOtras != alturita){
-    valorEnteroOtras = alturita;
-    misCartas[k].parentElement.style.transform = "translate("+primerValorOtras+"px,"+valorEnteroOtras.toString()+"px)";
-    misCartas[k].parentElement.style.border = "";
-  }
-  }
- }
-
-  misCartas[c].parentElement.style.transform = "translate("+primerValor+"px,"+valorEntero.toString()+"px)";
-  if(pintameElBorde){
-    misCartas[c].parentElement.style.border = "solid";
-  }
-    else{
-misCartas[c].parentElement.style.border = "";
-  }
-
-/*
-palos de las cartas (suit)
-0 = picas
-1 = corazones
-2 = treboles
-3 = diamantes
-
-el atributo "rank" es el valor de la carta
-*/
-let paloABuscar;
-let valorDeCarta;
-let padre = misCartas[c].parentElement;
-if(padre.classList.contains("hearts")){
- paloABuscar = 1;
-
-}else if(padre.classList.contains("spades")){
-paloABuscar = 0;
-}else if(padre.classList.contains("clubs")){
-paloABuscar = 2;
-}else{
-  paloABuscar = 3;
-}
-
-
-if(padre.classList.contains("rank1")){
-valorDeCarta = 1;
-}else if(padre.classList.contains("rank2")){
-  valorDeCarta = 2;
-}else if(padre.classList.contains("rank3")){
-  valorDeCarta = 3;
-}else{
-  valorDeCarta = 4;
-}
-
-
-esteDeck.cards.forEach(function (card, i) {
-  if(card.rank == valorDeCarta && card.suit == paloABuscar){
-    estaCartaElegida = card;
-   
-  
-  esteDivElegido = misCartas[c];
-  
-  }
-});
-
-
-this.divElegido = esteDivElegido;
-this.cartaElegida = estaCartaElegida;
-
-};
-//});
-
-
-}
-
-}
-
-
 
  },
  methods:{
      iniciarPartida(){
-      console.log(this.cartaElegida);
-      console.log(this.divElegido);
-     },
-     hacerClic(){
-       console.log("Estas haciendo clic a una carta");
+      console.log(cartaElegidosa);
+      console.log(idJugadoroso);
+      
      },
      moverCarta(){
 
 let misCartas = document.getElementsByClassName('face');
 
 
-console.log(this.cartaElegida);
+
 
 
 let indiceX = this.cartaElegida.x;
@@ -397,7 +403,7 @@ let esteDeckito = this.deck;
 
 
 
-this.socket.emit('moverCarta',{palo: this.cartaElegida.suit, valor: this.cartaElegida.rank, idJugador: this.idJugador});
+this.socket.emit('moverCarta',{palo: cartaElegidosa.suit, valor: cartaElegidosa.rank, idJugador: idJugadoroso});
 
 
 
@@ -445,13 +451,13 @@ if(this.idJugador == 0){
 
 cartaJugador1.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador2.x,
           y: cartaJugador2.y,
            onStart: function onStart() {
            
-            this.divElegido.parentElement.style.border = "";
+            divoso.parentElement.style.border = "";
             cartaJugador1.setSide('back');
           },
           onComplete: function onComplete(){
@@ -464,7 +470,7 @@ cartaJugador1.animateTo({
 
 	cartaJugador2.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador3.x,
           y: cartaJugador3.y,
@@ -484,7 +490,7 @@ cartaJugador1.animateTo({
 
 	cartaJugador3.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador4.x,
           y: cartaJugador4.y,
@@ -502,7 +508,7 @@ cartaJugador1.animateTo({
 
 	cartaJugador4.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: xDel1,
           y: yDel1,
@@ -513,7 +519,7 @@ cartaJugador1.animateTo({
           onComplete: function onComplete(){
              
             
-          // activarCartaMovida(cartaJugador4, yDel1);
+          seleccionarCarta(yDel1, false,esteDeckito);
            
           }
         });
@@ -527,13 +533,13 @@ cartaJugador1.animateTo({
 
 cartaJugador2.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador3.x,
           y: cartaJugador3.y,
            onStart: function onStart() {
             
-            this.divElegido.parentElement.style.border = "";
+            divoso.parentElement.style.border = "";
             cartaJugador2.setSide('back');
           },
           onComplete: function onComplete(){
@@ -546,7 +552,7 @@ cartaJugador2.animateTo({
 
 	cartaJugador1.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador2.x,
           y: cartaJugador2.y,
@@ -555,7 +561,7 @@ cartaJugador2.animateTo({
                 cartaJugador1.setSide('front');
           },
            onComplete: function onComplete(){
-              //seleccionarCarta(yDel2, false);
+              seleccionarCarta(yDel2, false,esteDeckito);
         
 
            
@@ -564,7 +570,7 @@ cartaJugador2.animateTo({
 
 	cartaJugador3.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador4.x,
           y: cartaJugador4.y,
@@ -582,7 +588,7 @@ cartaJugador2.animateTo({
 
 	cartaJugador4.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: xDel1,
           y: yDel1,
@@ -606,13 +612,13 @@ cartaJugador2.animateTo({
 
 cartaJugador3.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador4.x,
           y: cartaJugador4.y,
            onStart: function onStart() {
             
-            this.divElegido.parentElement.style.border = "";
+            divoso.parentElement.style.border = "";
             cartaJugador3.setSide('back');
           },
           onComplete: function onComplete(){
@@ -625,7 +631,7 @@ cartaJugador3.animateTo({
 
 	cartaJugador2.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador3.x,
           y: cartaJugador3.y,
@@ -635,14 +641,14 @@ cartaJugador3.animateTo({
 
           },
           onComplete: function onComplete(){
-       //	seleccionarCarta(yDel3, true);
+       	seleccionarCarta(yDel3, true,esteDeckito);
           
            
           }
         });
 	cartaJugador4.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: xDel1,
           y: yDel1,
@@ -660,7 +666,7 @@ cartaJugador3.animateTo({
 
 	cartaJugador1.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador2.x,
           y: cartaJugador2.y,
@@ -682,13 +688,13 @@ cartaJugador3.animateTo({
 
 cartaJugador4.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: xDel1,
           y: yDel1,
            onStart: function onStart() {
          
-             this.divElegido.parentElement.style.border = "";
+             divoso.parentElement.style.border = "";
             cartaJugador4.setSide('back');
           },
           onComplete: function onComplete(){
@@ -700,7 +706,7 @@ cartaJugador4.animateTo({
 
 cartaJugador3.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador4.x,
           y: cartaJugador4.y,
@@ -709,7 +715,7 @@ cartaJugador3.animateTo({
             cartaJugador3.setSide('front');
           },
           onComplete: function onComplete(){
-            //seleccionarCarta(yDel4, false);
+            seleccionarCarta(yDel4, false,esteDeckito);
             
 
            
@@ -717,7 +723,7 @@ cartaJugador3.animateTo({
         });
 cartaJugador1.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador2.x,
           y: cartaJugador2.y,
@@ -734,7 +740,7 @@ cartaJugador1.animateTo({
         });
 cartaJugador2.animateTo({
           delay: 200,
-          duration: 250,
+          duration: 400,
 
           x: cartaJugador3.x,
           y: cartaJugador3.y,
@@ -763,7 +769,7 @@ cartaJugador2.animateTo({
 });
 
 
-
+this.deck = esteDeckito;
 
 
      }
