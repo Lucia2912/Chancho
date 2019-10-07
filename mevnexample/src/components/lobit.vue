@@ -1,5 +1,8 @@
 <template>
+
 <div class="container">
+    <cabecera>
+</cabecera>
 <div class="row">
     <div class="col-lg-12">
         <!-- start:lobby -->
@@ -12,7 +15,12 @@
                    
                     <div class="room-desk">
                         <h4 class="pull-left">Sala de espera</h4>
-                        <a @click="addRow('xD')" class="pull-right btn btn-default" data-original-title="" title="">+ crear sala</a>
+                         <form @submit.prevent="crearSalita">
+                         Nombre: <input type="text" name="fname" v-model="salaNueva.nombre"><br>
+                         Descripción: <input type="text" name="lname" v-model="salaNueva.nombre"><br>
+                         <a @click="addRow('xD')" class="pull-right btn btn-default" data-original-title="" title="">+ crear sala</a>
+                       
+                        </form> 
                         
                         <div v-for="(input, index) in inputs" v-bind:key="input.one" class="room-box">
                             <h5 class="text-primary"><a href="#chat-room.html">Sala 1</a></h5>
@@ -473,10 +481,16 @@ a.guest-on i {
 </style>
 
 <script>
+    import cabecera from './cabecera';
     export default{
+        components:{
+          cabecera
+
+        },
         data(){
             return{
-            inputs:[]
+            inputs:[],
+            salaNueva:{}
             
             };
         },
@@ -492,6 +506,13 @@ a.guest-on i {
     deleteRow(index){
       this.inputs.splice(index,1);
     },
+    crearSalita(){
+        let uri = 'http://localhost:4000/sala/crear';
+    this.axios.post(uri, this.salaNueva).then(res => {
+        console.log(res);
+       this.$router.push({name: 'lobby'});
+    })
+    }
     }
     };
 </script>
