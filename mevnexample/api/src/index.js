@@ -94,7 +94,8 @@ let manoActual = [ases, dos, tres, cuatro];
     	if(losCuatroMovieronCartas == 4){
     		let cartasAMover = [cartaJugador1,cartaJugador2, cartaJugador3, cartaJugador4];
     		io.sockets.emit('cambiarDeLugarCarta',cartasAMover);
-    		losCuatroMovieronCartas = 0;
+			losCuatroMovieronCartas = 0;
+			console.log("Se emitio una vez");
     	}
 
 

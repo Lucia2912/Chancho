@@ -37,6 +37,7 @@ import lobitCompnent from './components/lobit.vue';
 import login from './components/Login.vue';
 import registrarse from './components/Register.vue';
 import miperfil from './components/Perfil.vue';
+import pruebaSocket from './components/SocketinComponent.vue';
 
 import PartidaComponent from './components/PartidaComponent.vue';
 
@@ -85,6 +86,11 @@ const routes = [
     name: 'partida',
     path: '/partida',
     component: PartidaComponent
+},
+{
+    name: 'socketin',
+    path: '/socketin',
+    component: pruebaSocket
 }
 ];
 
