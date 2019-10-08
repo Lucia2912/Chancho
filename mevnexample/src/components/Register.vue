@@ -1,5 +1,8 @@
 <template>
     <div class="container">
+      <cabecera>
+        
+      </cabecera>
         <div class="row">
             <div class="col-md-6 mt-5 mx-auto">
                 <form @submit.prevent="registro">
@@ -30,7 +33,11 @@
 
 <script>
 
-export default {
+import cabecera from './cabecera';
+    export default{
+        components:{
+          cabecera
+        },
         data(){
         return {
           usuario:{},

@@ -1,5 +1,7 @@
 <template>
 <div class="container">
+    <cabecera>
+</cabecera>
 <div class="row">
     <div class="col-lg-12">
         <!-- start:lobby -->
@@ -9,21 +11,32 @@
                 <!-- end:aside lobby kiri -->
                 <!-- start:aside lobby tengah -->
                 <aside class="tengah-side">
-                   
                     <div class="room-desk">
                         <h4 class="pull-left">Sala de espera</h4>
-                        <a @click="addRow('xD')" class="pull-right btn btn-default" data-original-title="" title="">+ crear sala</a>
-                        
-                        <div v-for="(input, index) in inputs" v-bind:key="input.one" class="room-box">
-                            <h5 class="text-primary"><a href="#chat-room.html">Sala 1</a></h5>
-                            <p>Jugar<a href="##" class="btn btn-info pull-right" data-original-title="" title="">UNIRME</a> </p>
-                            <p><span class="text-muted">Creador: </span> UsuarioCreador | <span class="text-muted">Miembros: </span> 3</p>
-                            <button type="button" class="btn btn-danger" @click="deleteRow(index)">Quitar</button>
-                        </div>
+                       
+                         <form @submit.prevent="crearSalita" class="pull-right position">
+                              <div class="row col-xs-12">
+                         <input type="text" class="bton form-control search-btn col-xs-6" style="width: 40%" placeholder="Nombre..." name="fname" v-model="salaNueva.nombre"><br>
+                         <input type="text" name="lname" class="bton form-control search-btn col-xs-6" placeholder="Breve descripción" maxlength="100" style="width: 40%" v-model="salaNueva.descripcion"><br>
+                           </div>
+                           <button class="btn btn-dark otra">Ingresar</button>
+                          </form> 
+                           
+                           
+                   <div>
+                         <div v-for="salita in salitas" :key="salita._id" class="room-box">
+                            <h5 ><span class="text-muted">Nombre: </span><a href="#chat-room.html">{{ salita.Nombre }}</a> </h5>
+                            <h5 class="cortito"><span class="text-muted">Descripcion: </span> {{ salita.Descripcion }} </h5>
+                           
+                            <h5><span class="text-muted">Creador: </span> UsuarioCreador | <span class="text-muted">Miembros: </span>{{ salita.CantidadActual }} |    <a href="##" data-original-title="" title="">UNIRME</a>
+                       </h5>
+                           </div>
                     </div>
+                   
+                    </div>
+                    
                 </aside>
-                <!-- end:aside lobby tengah -->
-                <!-- start:aside lobby kanan -->
+              
                 <aside class="kanan-side">
                     
                     <div class="invite-row">
@@ -31,61 +44,13 @@
                         <a href="##" class="btn btn-dark pull-right" data-original-title="" title="">+ Invitar</a>
                     </div>
                     
-                   <!-- <ul class="chat-available-user">
-                        <li>
-                            <a href="#chat-room.html">
-                                <i class="fa fa-circle text-success"></i>
-                                Jonathan Smith
-                                <span class="text-muted">3h:22m</span> 
-                            </a> 
-                        </li>
-                        <li>
-                            <a href="#chat-room.html">
-                                <i class="fa fa-circle text-success"></i>
-                                Jhone Due
-                                <span class="text-muted">1h:2m</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat-room.html">
-                                <i class="fa fa-circle text-success"></i>
-                                Tatang Sutrana
-                                <span class="text-muted">2h:32m</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat-room.html">
-                                <i class="fa fa-circle text-danger"></i>
-                                Cendy Andrianto
-                                <span class="text-muted">3h:22m</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat-room.html">
-                                <i class="fa fa-circle text-warning"></i>
-                                Alice Norin
-                                <span class="text-muted">1h:12m</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat-room.html">
-                                <i class="fa fa-circle text-muted"></i>
-                                Steve Jobs
-                                <span class="text-muted">3h:22m</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#chat-room.html">
-                                <i class="fa fa-circle text-muted"></i>
-                                Jonathan Smith
-                                <span class="text-muted">3h:22m</span>
-                            </a>
-                        </li>
-                    </ul> -->
+                  
                 </aside>
+
                 <!-- end:aside lobby kanan -->
             </div>
         </div>
+        
         <!-- end:lobby -->
     </div>
 </div>
@@ -100,7 +65,30 @@
     CHAT ROOM
     =================================
 */
+.cortito{
+    word-wrap: break-word;
+}
+.bton{
+    margin:5px;
+}
+.otra{
+    margin-top: 10px;
+}
+.divSalita {
+   background-color: #a4a7a8;
 
+width: 500px;
+
+height: 200px;
+
+overflow: auto;
+
+margin: 0 auto;
+
+    margin-top: 0px;
+
+margin-top: 10px;
+}
 .chat-room {
     border-collapse: collapse;
     border-spacing: 0;
@@ -337,12 +325,19 @@ ul.chat-user li a:hover{
 }
 
 .room-box {
-    border: 1px solid #f7f8fa;
-    background: #f7f8fa;
-    padding: 10px;
-    display: inline-block;
-    width: 100%;
-    margin-top: 10px;
+   border: 1px solid #f7f8fa;
+
+background: #f7f8fa;
+
+padding: 10px;
+
+display: inline-block;
+
+width: 460px;
+
+margin-top: 10px;
+
+margin-left: 10px;
 }
 
 .room-box h5 {
@@ -473,15 +468,27 @@ a.guest-on i {
 </style>
 
 <script>
+    import cabecera from './cabecera';
     export default{
+        components:{
+          cabecera
+
+        },
         data(){
             return{
-            inputs:[]
+            inputs:[],
+            salitas:[],
+            salaNueva:{}
             
             };
         },
         created(){
-
+              let uri = 'http://localhost:4000/sala/listar';
+    this.axios.get(uri).then(res => {
+        console.log(res.data);
+        this.salitas = res.data;
+      // this.$router.push({name: 'lobby'});
+    })
         }, 
     methods: {
         addRow(txt){
@@ -492,6 +499,13 @@ a.guest-on i {
     deleteRow(index){
       this.inputs.splice(index,1);
     },
+    crearSalita(){
+        let uri = 'http://localhost:4000/sala/crear';
+    this.axios.post(uri, this.salaNueva).then(res => {
+        console.log(res);
+       this.$router.push({name: 'lobby'});
+    })
+    }
     }
     };
 </script>

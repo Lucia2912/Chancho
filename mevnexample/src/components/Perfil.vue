@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+          <cabecera>
+</cabecera>
         <div class="jumbotron mt-5">
             <div class="col-sm-8 mx-auto">
                 <h1 class="text-center">Perfil</h1>
@@ -22,7 +24,11 @@
 
 <script>
 import jwtDecode from 'jwt-decode';
-export default {
+import cabecera from './cabecera';
+    export default{
+        components:{
+          cabecera
+        },
     data(){
         const token = localStorage.usertoken;
         const decode = jwtDecode(token);
