@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const config = require('./DB.js');
 const postRoute = require('./routes/post.route');
 const userRoute = require('./routes/user.route');
+const salaRoute = require('./routes/sala.route');
 
 
 
@@ -22,6 +23,7 @@ mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true })
 
 app.use('/posts', postRoute);
 app.use('/user', userRoute);
+app.use('/sala', salaRoute);
 
 let server = app.listen(PORT, function(){
   console.log('Servidor en puerto:',PORT);
