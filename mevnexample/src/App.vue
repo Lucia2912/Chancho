@@ -37,6 +37,6 @@
             EventBus.$on('partida', data => {
                 console.log(data);
             });
-        }
+        } 
     }
 </script>
