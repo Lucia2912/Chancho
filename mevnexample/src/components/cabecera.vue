@@ -61,14 +61,12 @@
 
 <script>
     import EventBus from './EventBus';
-    EventBus.$on('logged-in', test => {
-        console.log(test);
-    })
     export default{
         data(){
             return{
                 auth: '',
-                user: ''
+                user: '',
+                Token: ''
             }
         },
         methods: {
@@ -78,6 +76,10 @@
             }
         },
         mounted(){
+            if (localStorage.usertoken) {
+            this.Token = localStorage.usertoken;
+                this.auth = 'loggedin';
+            }
             EventBus.$on('logged-in', status => {
                 this.auth = status;
             });

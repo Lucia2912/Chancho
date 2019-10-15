@@ -19,7 +19,7 @@
                          <input type="text" class="bton form-control search-btn col-xs-6" style="width: 40%" placeholder="Nombre..." name="fname" v-model="salaNueva.nombre"><br>
                          <input type="text" name="lname" class="bton form-control search-btn col-xs-6" placeholder="Breve descripción" maxlength="100" style="width: 40%" v-model="salaNueva.descripcion"><br>
                            </div>
-                           <button class="btn btn-dark otra">Ingresar</button>
+                           <button class="btn btn-dark otra">Crear</button>
                           </form> 
                            
                            
@@ -28,7 +28,7 @@
                             <h5 ><span class="text-muted">Nombre: </span><a href="#chat-room.html">{{ salita.Nombre }}</a> </h5>
                             <h5 class="cortito"><span class="text-muted">Descripcion: </span> {{ salita.Descripcion }} </h5>
                            
-                            <h5><span class="text-muted">Creador: </span> UsuarioCreador | <span class="text-muted">Miembros: </span>{{ salita.CantidadActual }} |    <a href="##" data-original-title="" title="">UNIRME</a>
+                            <h5><span class="text-muted">Creador: </span> {{ salita.Creador.nickname }} | <span class="text-muted">Miembros: </span>{{ salita.CantidadActual }} |    <button @click="ingresar(salita)" id="btnIngresar">UNIRME</button>
                        </h5>
                            </div>
                     </div>
@@ -468,6 +468,7 @@ a.guest-on i {
 </style>
 
 <script>
+    import jwtDecode from 'jwt-decode';
     import cabecera from './cabecera';
     export default{
         components:{
@@ -475,22 +476,41 @@ a.guest-on i {
 
         },
         data(){
+            const token = localStorage.usertoken;
+        const decode = jwtDecode(token);
             return{
             inputs:[],
             salitas:[],
-            salaNueva:{}
-            
+            salaNueva:{},
+            usuario: decode
             };
         },
         created(){
               let uri = 'http://localhost:4000/sala/listar';
     this.axios.get(uri).then(res => {
-        console.log(res.data);
         this.salitas = res.data;
       // this.$router.push({name: 'lobby'});
     })
         }, 
     methods: {
+        ingresar(salita){
+            if(!salita.Miembros.includes(this.usuario) && salita.Miembros.length < 4){
+                console.log(salita.Miembros);
+                console.log(this.usuario);
+                console.log(salita.Miembros.includes(this.usuario));
+              salita.Miembros.push(this.usuario);
+                if(salita.CantidadActual < 4){
+                let uri = `http://localhost:4000/sala/actualizar/${salita._id}`;
+                this.axios.post(uri, salita).then(res => {
+                    this.$router.push({name: 'partida'});
+                })
+                } else {
+                     alert('Solo se admiten hasta 4 usuarios');
+                }
+            } else {
+               this.$router.push({name: 'partida'});
+            }
+        },
         addRow(txt){
       this.inputs.push({
         one: txt
@@ -500,10 +520,10 @@ a.guest-on i {
       this.inputs.splice(index,1);
     },
     crearSalita(){
+        this.salaNueva.creador = this.usuario;
         let uri = 'http://localhost:4000/sala/crear';
     this.axios.post(uri, this.salaNueva).then(res => {
-        console.log(res);
-       this.$router.push({name: 'lobby'});
+       this.$router.push({name: 'partida'});
     })
     }
     }
