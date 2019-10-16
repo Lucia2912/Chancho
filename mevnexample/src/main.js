@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret, faUser } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarCheck  } from '@fortawesome/free-regular-svg-icons'

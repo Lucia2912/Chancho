@@ -13,16 +13,30 @@
                 <aside class="tengah-side">
                     <div class="room-desk">
                         <h4 class="pull-left">Sala de espera</h4>
-                       
-                         <form @submit.prevent="crearSalita" class="pull-right position">
-                              <div class="row col-xs-12">
-                         <input type="text" class="bton form-control search-btn col-xs-6" style="width: 40%" placeholder="Nombre..." name="fname" v-model="salaNueva.nombre"><br>
-                         <input type="text" name="lname" class="bton form-control search-btn col-xs-6" placeholder="Breve descripción" maxlength="100" style="width: 40%" v-model="salaNueva.descripcion"><br>
-                           </div>
-                           <button class="btn btn-dark otra">Crear</button>
-                          </form> 
-                           
-                           
+         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+Crear sala
+</button>       
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Crear sala</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+       <input type="text" class="bton form-control search-btn col-xs-6" placeholder="Nombre..." name="fname" v-model="salaNueva.nombre"><br>
+       <input type="text" name="lname" class="bton form-control search-btn col-xs-6" placeholder="Breve descripción" maxlength="100" v-model="salaNueva.descripcion">
+      </div>
+      <div class="modal-footer">
+          <button @click="crearSalita" type="button" class="btn btn-primary" data-dismiss="modal">Crear</button>
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+      </div>
+    </div>
+  </div>
+</div>
+                   
                    <div>
                          <div v-for="salita in salitas" :key="salita._id" class="room-box">
                             <h5 ><span class="text-muted">Nombre: </span><a href="#chat-room.html">{{ salita.Nombre }}</a> </h5>
