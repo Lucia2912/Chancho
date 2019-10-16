@@ -16,9 +16,11 @@ export default {
    socket.off("cartasJugador");
    console.log("befoUpd");
  },mounted: function mounted () {
+   let algo = this;
      socket= io('localhost:4000');
      socket.on('cartasJugador', function(data){
-         this.$methods.metodox();
+     
+        algo.metodox();
       });
  },
  data(){
@@ -32,9 +34,11 @@ export default {
       
      },
      metodox(){
-         console.log("cartasJugador");
+        /* console.log("cartasJugador");
         this.idJugador=Math.random();
-        console.log(this.idJugador);
+        console.log(this.idJugador);*/
+
+        console.log("hace algo");
      }
  }
 }

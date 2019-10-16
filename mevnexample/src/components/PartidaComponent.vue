@@ -4,6 +4,7 @@
 <div id="container"></div>
 <button v-on:click.stop="iniciarPartida">Iniciar Partida</button>
 <button @click="moverCarta">Mover</button>
+<button id="btnChancho" style="display: none;">Chancho!</button>
 </div>
 </template>
 
@@ -387,6 +388,7 @@ entro = true;
 
 });
 
+let llamarMetodo = this;
 this.socket.on('cambiarDeLugarCarta', function(data){
 
 
@@ -515,7 +517,7 @@ cartaJugador1.animateTo({
              
             
           seleccionarCarta(yDel1, false);
-           
+           llamarMetodo.tieneChancho();
           }
         });
 
@@ -556,6 +558,7 @@ cartaJugador2.animateTo({
           },
            onComplete: function onComplete(){
               seleccionarCarta(yDel2, false);
+              llamarMetodo.tieneChancho();
         
 
            
@@ -636,7 +639,8 @@ cartaJugador3.animateTo({
 
           },
           onComplete: function onComplete(){
-       	seleccionarCarta(yDel3, true);
+         seleccionarCarta(yDel3, true);
+         llamarMetodo.tieneChancho();
           
            
           }
@@ -712,6 +716,7 @@ cartaJugador3.animateTo({
           },
           onComplete: function onComplete(){
             seleccionarCarta(yDel4, false);
+            llamarMetodo.tieneChancho();
             
 
            
@@ -773,6 +778,38 @@ cartaJugador2.animateTo({
         console.log("cartasJugador");
       });
 
+
+     },
+     tieneChancho(){
+
+
+
+       let cartasBocaArriba = document.getElementsByClassName('face');
+
+        let todasCartasIguales = "";
+        let sonIguales = false;
+        let suma = 0;
+       for(let h=0; h<cartasBocaArriba.length; h++){
+
+         var classList = cartasBocaArriba[h].parentElement.className.split(' ');
+        
+         console.log(classList[2]);
+         if(todasCartasIguales == ""){
+           todasCartasIguales = classList[2];
+         }else if(todasCartasIguales == classList[2])
+         {
+           sonIguales = true;
+           suma++;
+         }else{
+           sonIguales = false;
+         }
+
+       }
+       console.log("Son iguales "+sonIguales+" "+suma);
+
+      if(sonIguales && suma == 3){
+        document.getElementById("btnChancho").style.display = "block";
+      }
 
      },
      moverCarta(){
