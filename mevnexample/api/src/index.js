@@ -15,6 +15,7 @@ let corsOptions = {
   }
  }
 app.use(cors(corsOptions));
+const salaRoute = require('./routes/sala.route');
 app.use(express.urlencoded({extended: false}));
 app.use(express.json());
 
@@ -29,9 +30,10 @@ mongoose.connect(config.DB, { useNewUrlParser: true, useUnifiedTopology: true })
 app.use('/user', userRoute);
 app.use('/chat', chatRoute);
 app.use('/room', roomRoute);
+app.use('/sala', salaRoute);
 let server = app.listen(json.PORTBACKEND, json.IPBACKEND,  function(){
   console.log('Servidor en puerto:',json.PORTBACKEND);
-});
+
 
 
 //let io = require('socket.io')(server,{ origins: '*:*'});
@@ -119,7 +121,8 @@ let manoActual = [ases, dos, tres, cuatro];
     	if(losCuatroMovieronCartas == 4){
     		let cartasAMover = [cartaJugador1,cartaJugador2, cartaJugador3, cartaJugador4];
     		io.sockets.emit('cambiarDeLugarCarta',cartasAMover);
-    		losCuatroMovieronCartas = 0;
+			losCuatroMovieronCartas = 0;
+			console.log("Se emitio una vez");
     	}
     });
 });

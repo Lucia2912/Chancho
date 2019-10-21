@@ -1,5 +1,7 @@
 <template>
     <div class="container">
+        <cabecera>
+</cabecera>
         <div class="row">
             <div class="col-md-6 mt-5 mx-auto">
                 <form @submit.prevent="login">
@@ -32,7 +34,12 @@
 <script>
 import json from '../../environments/env.json'
 import EventBus from './EventBus';
-export default {
+import cabecera from './cabecera';
+    export default{
+        components:{
+          cabecera
+
+        },
         data(){
         return {
           usuario:{},

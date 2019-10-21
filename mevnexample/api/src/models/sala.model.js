@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const User = require('./User.model');
 
 const SalaSchema = new Schema({
    Nombre: {
@@ -19,7 +20,12 @@ const SalaSchema = new Schema({
    },
    Descripcion: {
        type: String
-   }
+   },
+   Creador: {
+     type: Schema.ObjectId, 
+     ref: 'User'
+   },
+   Miembros: [{type: Schema.ObjectId, ref: 'User'}]
 });
 
 module.exports = Sala = mongoose.model('salas', SalaSchema);

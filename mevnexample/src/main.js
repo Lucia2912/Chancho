@@ -2,6 +2,7 @@
 import Vue from 'vue'
 import App from './App.vue'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import 'bootstrap/dist/js/bootstrap'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faUserSecret, faUser } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarCheck  } from '@fortawesome/free-regular-svg-icons'
@@ -32,11 +33,13 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
 import HomeComponent from './components/HomeComponent.vue';
-import lobitCompnent from './components/lobit.vue';
+import lobitComponent from './components/lobit.vue';
 import login from './components/Login.vue';
 import registrarse from './components/Register.vue';
 import miperfil from './components/Perfil.vue';
+import pruebaSocket from './components/SocketinComponent.vue';
 
+import cabecera from './components/cabecera.vue';
 import PartidaComponent from './components/PartidaComponent.vue';
 
 const routes = [
@@ -48,7 +51,7 @@ const routes = [
   {
     name: 'lobby',
     path: '/lobby',
-    component: lobitCompnent
+    component: lobitComponent
 },
 {
     name: 'registrarse',
@@ -69,6 +72,16 @@ const routes = [
     name: 'partida',
     path: '/partida',
     component: PartidaComponent
+},
+{
+    name: 'cabecera',
+    path: '/cabecera',
+    component: cabecera
+},
+{
+    name: 'socketin',
+    path: '/socketin',
+    component: pruebaSocket
 }
 ];
 
