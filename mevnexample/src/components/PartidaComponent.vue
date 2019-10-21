@@ -10,7 +10,7 @@
 <script>
 //let cardeame = require('../../node_modules/deck-of-cards/dist/deck.min.js');
 import Deck from 'deck-of-cards/dist/deck';
-
+import json from '../../environments/env.json'
 import io from 'socket.io-client';
 
 import EventBus from './EventBus';
@@ -19,7 +19,7 @@ export default {
    return{
      container:{},
      deck:{},
-     socket : io('localhost:4000'),
+     socket : io(json.IP + json.PORT),
      divElegido:{},
      cartaElegida:{},
      idJugador:0

@@ -27,7 +27,6 @@
                     <aside class="kanan-side">
 
                         <div class="invite-row">
-                            <h4 class="pull-left">Chat online</h4>
                             <chatsito></chatsito>
                         </div>
 
@@ -472,6 +471,7 @@ a.guest-on i {
 </style>
 
 <script>
+import json from '../../environments/env.json'
 import chatsito from './Chat';
 import * as io from 'socket.io-client'
 import jwtDecode from 'jwt-decode';
@@ -488,14 +488,13 @@ export default {
             errors: [],
             chat: {},
             rooms:[],
-            socket: io('http://localhost:4000')
+            socket: io(json.IP + json.PORT)
         };
     },
     created() {
-        this.axios.get(`http://localhost:4000/room`)
+        this.axios.get(json.IP + json.PORT + 'room')
     .then(response => {
       this.rooms = response.data
-      console.log(this.rooms);
     })
     .catch(e => {
       this.errors.push(e)
@@ -503,9 +502,9 @@ export default {
     },
     mounted() {
         this.chat.message = this.usuario.nickname + ' join the room'
-      this.axios.post(`http://localhost:4000/chat`, this.chat)
+      this.axios.post(json.IP + json.PORT + 'chat', this.chat)
       .then(response => {
-        this.socket.emit('save-message', { nickname: this.usuario.nickname, message: 'Join this room', created_date: new Date() });
+        this.socket.emit('save-message', { nickname: this.usuario.nickname, message: 'Join this room', created_date: new Date().toDateString() });
       })
       .catch(e => {
         this.errors.push(e)

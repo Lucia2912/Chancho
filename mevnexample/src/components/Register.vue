@@ -29,7 +29,7 @@
 </template>
 
 <script>
-
+import json from '../../environments/env.json'
 export default {
         data(){
         return {
@@ -48,7 +48,7 @@ export default {
           vm.correo = false;
           let _vm = this.errorMessage;
           _vm.correo = null;
-    let uri = 'http://localhost:4000/user/registro';
+    let uri = json.IP + json.PORT + 'user/registro';
     this.axios.post(uri, this.usuario).then(res => {
         console.log(res);
        this.$router.push({name: 'login'});

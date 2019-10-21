@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import json from '../../environments/env.json'
 import EventBus from './EventBus';
 export default {
         data(){
@@ -53,12 +54,13 @@ export default {
           let _vm = this.errorMessage;
           _vm.correo = null;
           _vm.cont = null;
-    let uri = 'http://localhost:4000/user/login';
+    let uri = json.IP + json.PORT + 'user/login';
     this.axios.post(uri, this.usuario).then(res => {       
        //localStorage.setItem('usertoken', res.data);
        localStorage.usertoken = res.data;
        this.usuario.email = '';
        this.usuario.password = '';
+       this.emitMethod();
        this.$router.push({name: 'miperfil'});
     })
     .catch(error => {
@@ -85,7 +87,7 @@ export default {
                 }
               }
     });
-    this.emitMethod();
+    
 },
 emitMethod(){
     EventBus.$emit('logged-in', 'loggedin');

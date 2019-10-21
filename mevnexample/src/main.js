@@ -32,9 +32,6 @@ Vue.use(VueAxios, axios);
 Vue.config.productionTip = false;
 
 import HomeComponent from './components/HomeComponent.vue';
-import CreateComponent from './components/CreateComponent.vue';
-import IndexComponent from './components/IndexComponent.vue';
-import EditComponent from './components/EditComponent.vue';
 import lobitCompnent from './components/lobit.vue';
 import login from './components/Login.vue';
 import registrarse from './components/Register.vue';
@@ -47,21 +44,6 @@ const routes = [
       name: 'home',
       path: '/',
       component: HomeComponent
-  },
-  {
-      name: 'create',
-      path: '/create',
-      component: CreateComponent
-  },
-  {
-      name: 'posts',
-      path: '/posts',
-      component: IndexComponent
-  },
-  {
-      name: 'edit',
-      path: '/edit/:id',
-      component: EditComponent
   },
   {
     name: 'lobby',
