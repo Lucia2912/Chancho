@@ -35,7 +35,7 @@
             <div class="input-group">
                 <input class="form-input" id="message" v-model.trim="chat.message" />
                 <div class="input-group-append">
-                    <button type="submit">Send</button>
+                    <button type="submit">Enviar</button>
                 </div>
             </div>
         </form>
@@ -108,6 +108,10 @@ export default {
 </script>
 
 <style>
+
+.header{
+    text-align:left;
+}
 .chat .left .chat-body {
     text-align: left;
     margin-left: 100px;

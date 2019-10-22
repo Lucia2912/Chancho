@@ -126,3 +126,4 @@ let manoActual = [ases, dos, tres, cuatro];
     	}
     });
 });
+});

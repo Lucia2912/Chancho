@@ -68,6 +68,7 @@ Crear sala
         <!-- end:lobby -->
     </div>
 </div>
+</div>
 </template>
 
 <style>
@@ -505,7 +506,7 @@ export default {
             };
         },
         created(){
-              let uri = 'http://localhost:4000/sala/listar';
+              let uri = json.IP + json.PORT + 'sala/listar';
     this.axios.get(uri).then(res => {
         this.salitas = res.data;
       // this.$router.push({name: 'lobby'});
@@ -526,7 +527,7 @@ export default {
                 console.log(salita.Miembros.includes(this.usuario));
               salita.Miembros.push(this.usuario);
                 if(salita.CantidadActual < 4){
-                let uri = `http://localhost:4000/sala/actualizar/${salita._id}`;
+                let uri = json.IP + json.PORT + `sala/actualizar/${salita._id}`;
                 this.axios.post(uri, salita).then(res => {
                     this.$router.push({name: 'partida'});
                 })
@@ -547,17 +548,17 @@ export default {
         },
         crearSalita(){
         this.salaNueva.creador = this.usuario;
-        let uri = 'http://localhost:4000/sala/crear';
+        let uri = json.IP + json.PORT + 'sala/crear';
     this.axios.post(uri, this.salaNueva).then(res => {
        this.$router.push({name: 'partida'});
     })
     }
     },
     mounted() {
-        this.chat.message = this.usuario.nickname + ' join the room'
+        this.chat.message = this.usuario.nickname + ' se unió a la sala'
       this.axios.post(json.IP + json.PORT + 'chat', this.chat)
       .then(response => {
-        this.socket.emit('save-message', { nickname: this.usuario.nickname, message: 'Join this room', created_date: new Date().toDateString() });
+        this.socket.emit('save-message', { nickname: this.usuario.nickname, message: 'se unió a la sala', created_date: new Date().toDateString() });
       })
       .catch(e => {
         this.errors.push(e)
