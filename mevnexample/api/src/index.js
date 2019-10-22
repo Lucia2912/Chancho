@@ -33,7 +33,7 @@ app.use('/room', roomRoute);
 app.use('/sala', salaRoute);
 let server = app.listen(json.PORTBACKEND, json.IPBACKEND,  function(){
   console.log('Servidor en puerto:',json.PORTBACKEND);
-
+});
 
 
 //let io = require('socket.io')(server,{ origins: '*:*'});

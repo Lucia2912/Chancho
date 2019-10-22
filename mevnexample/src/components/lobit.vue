@@ -68,6 +68,7 @@ Crear sala
         <!-- end:lobby -->
     </div>
 </div>
+</div>
 </template>
 
 <style>
