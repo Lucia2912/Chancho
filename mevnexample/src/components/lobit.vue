@@ -54,8 +54,7 @@ Crear sala
                 <aside class="kanan-side">
                     
                     <div class="invite-row">
-                        <h4 class="pull-left">Chat online</h4>
-                        <a href="##" class="btn btn-dark pull-right" data-original-title="" title="">+ Invitar</a>
+                        <chatsito></chatsito>
                     </div>
                     
                   
@@ -63,17 +62,15 @@ Crear sala
 
                 <!-- end:aside lobby kanan -->
             </div>
+            <!-- end:lobby -->
         </div>
         
         <!-- end:lobby -->
     </div>
 </div>
-</div>  
 </template>
 
 <style>
-
-
 /*
     =================================
     CHAT ROOM
@@ -112,7 +109,6 @@ margin-top: 10px;
     position: relative;
 }
 
-
 .chat-room aside {
     display: table-cell;
     float: none;
@@ -127,6 +123,7 @@ margin-top: 10px;
     border-radius: 4px 0 0 4px;
     -webkit-border-radius: 4px 0 0 4px;
 }
+
 .chat-room .tengah-side {
     width: 50%;
     background: #fff;
@@ -144,6 +141,7 @@ margin-top: 10px;
     min-height: 70px;
     padding: 15px;
 }
+
 .chat-room .kanan-side .user-head {
     background: #39bbdb;
     color: #FFFFFF;
@@ -153,7 +151,6 @@ margin-top: 10px;
     margin-left: -1px;
     position: relative;
 }
-
 
 .chat-room .user-head i {
     float: left;
@@ -190,7 +187,7 @@ margin-top: 10px;
     transition: all .3s ease;
     box-shadow: none;
     background: #eee;
-    padding:0 5px 0 35px;
+    padding: 0 5px 0 35px;
     margin-top: 2px;
     border: none;
     color: #fff;
@@ -213,7 +210,6 @@ margin-top: 10px;
     color: #fff;
 }
 
-
 ul.chat-list li a {
     color: #6a6a6a;
     display: block;
@@ -221,7 +217,9 @@ ul.chat-list li a {
     font-weight: 300;
     text-decoration: none;
 }
-ul.chat-list li a:hover, ul.chat-list li.active a {
+
+ul.chat-list li a:hover,
+ul.chat-list li.active a {
     color: #00a9b4;
     background: #f2f4f7;
 }
@@ -257,7 +255,7 @@ ul.chat-list {
     list-style: none;
 }
 
-ul.chat-user  {
+ul.chat-user {
     margin-bottom: 200px;
 }
 
@@ -265,7 +263,7 @@ ul.chat-user li {
     border-bottom: none;
 }
 
-ul.chat-user li a:hover{
+ul.chat-user li a:hover {
     background: none;
     color: #6a6a6a;
 }
@@ -359,6 +357,7 @@ margin-left: 10px;
     font-weight: 300;
     font-size: 16px;
 }
+
 .room-box h5 a {
     color: #00a9b4;
 }
@@ -416,6 +415,7 @@ ul.chat-available-user li a {
     color: #6a6a6a;
     text-decoration: none;
 }
+
 ul.chat-available-user li i {
     padding-right: 5px;
     font-size: 10px;
@@ -444,15 +444,14 @@ ul.chat-available-user li i {
     font-weight: 600;
 }
 
-.group-rom .second-part{
+.group-rom .second-part {
     width: 60%;
 }
 
-.group-rom .third-part{
+.group-rom .third-part {
     width: 15%;
     color: #d4d3d3;
 }
-
 
 a.guest-on {
     color: #6a6a6a;
@@ -478,17 +477,19 @@ a.guest-on i {
 .lobby {
     padding: 0 !important;
 }
-                                                 
 </style>
 
 <script>
-    import jwtDecode from 'jwt-decode';
+import json from '../../environments/env.json'
+import chatsito from './Chat';
+import * as io from 'socket.io-client'
+import jwtDecode from 'jwt-decode';
     import cabecera from './cabecera';
-    export default{
-        components:{
-          cabecera
-
-        },
+export default {
+    components:{
+        chatsito,
+         cabecera
+    },
         data(){
             const token = localStorage.usertoken;
         const decode = jwtDecode(token);
@@ -496,7 +497,11 @@ a.guest-on i {
             inputs:[],
             salitas:[],
             salaNueva:{},
-            usuario: decode
+            usuario: decode,
+            errors: [],
+            chat: {},
+            rooms:[],
+            socket: io(json.IP + json.PORT)
             };
         },
         created(){
@@ -504,6 +509,13 @@ a.guest-on i {
     this.axios.get(uri).then(res => {
         this.salitas = res.data;
       // this.$router.push({name: 'lobby'});
+    })
+    this.axios.get(json.IP + json.PORT + 'room')
+    .then(response => {
+      this.rooms = response.data
+    })
+    .catch(e => {
+      this.errors.push(e)
     })
         }, 
     methods: {
@@ -530,16 +542,26 @@ a.guest-on i {
         one: txt
       });
     },
-    deleteRow(index){
-      this.inputs.splice(index,1);
-    },
-    crearSalita(){
+    deleteRow(index) {
+            this.inputs.splice(index, 1);
+        },
+        crearSalita(){
         this.salaNueva.creador = this.usuario;
         let uri = 'http://localhost:4000/sala/crear';
     this.axios.post(uri, this.salaNueva).then(res => {
        this.$router.push({name: 'partida'});
     })
     }
-    }
-    };
+    },
+    mounted() {
+        this.chat.message = this.usuario.nickname + ' join the room'
+      this.axios.post(json.IP + json.PORT + 'chat', this.chat)
+      .then(response => {
+        this.socket.emit('save-message', { nickname: this.usuario.nickname, message: 'Join this room', created_date: new Date().toDateString() });
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+};
 </script>

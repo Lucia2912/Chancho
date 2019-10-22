@@ -32,7 +32,7 @@
 </template>
 
 <script>
-
+import json from '../../environments/env.json'
 import cabecera from './cabecera';
     export default{
         components:{
@@ -55,7 +55,7 @@ import cabecera from './cabecera';
           vm.correo = false;
           let _vm = this.errorMessage;
           _vm.correo = null;
-    let uri = 'http://localhost:4000/user/registro';
+    let uri = json.IP + json.PORT + 'user/registro';
     this.axios.post(uri, this.usuario).then(res => {
         console.log(res);
        this.$router.push({name: 'login'});

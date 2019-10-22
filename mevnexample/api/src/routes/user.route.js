@@ -5,7 +5,6 @@ const  jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 
 const User = require('../models/User.model');
-users.use(cors());
 
 process.env.SECRET_KEY = 'secret';
 
@@ -44,7 +43,6 @@ users.post('/registro', (req, res) => {
         res.send('error: ' + err);
     });
 });
-
 
 users.post('/login', (req, res) => {
     User.findOne({
