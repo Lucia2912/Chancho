@@ -9,6 +9,7 @@
 </template>
 
 <script>
+import EventBus from './EventBus';
 //let cardeame = require('../../node_modules/deck-of-cards/dist/deck.min.js');
 import Deck from 'deck-of-cards/dist/deck';
 import json from '../../environments/env.json'
@@ -157,11 +158,20 @@ export default {
      cartaElegida:{},
      idJugador:0
    };
- },beforeUpdate(){
+ },
+ created(){
+   console.log(this.$route.params.sala);
+   },
+   beforeUpdate(){
    this.socket.off("cartasJugador");
    console.log("before update");
  },
     mounted(){
+      this.socket.emit('CrearPartida', this.$route.params.sala);
+
+    this.socket.on('mensaje', function(data) {
+   console.log('Incoming message:', data);
+});
    //this.deck = Deck.Deck();
    //this.deck.mount(document.getElementById("container"));
 esteDeckardo = Deck.Deck();

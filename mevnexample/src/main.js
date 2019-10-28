@@ -70,7 +70,7 @@ const routes = [
 },
 {
     name: 'partida',
-    path: '/partida',
+    path: '/partida/:sala',
     component: PartidaComponent
 },
 {

@@ -38,7 +38,7 @@ salas.post('/crear', (req, res) => {
     }
     Sala.create(sala)
     .then(sala=> {
-        res.json({status: sala.Nombre + ' registrada' });
+        res.json({IDSala: sala._id});
     })
     .catch(err=> {
         res.send('error: '+ err);

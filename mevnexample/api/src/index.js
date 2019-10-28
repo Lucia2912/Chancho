@@ -81,7 +81,12 @@ io.sockets.on('connection', function (socket) {
 
 console.log('ON');
 
-
+socket.on('CrearPartida', function(data){
+  socket.join(data);
+  //console.log(io.sockets.clients(data));
+   io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
+ 
+});
 socket.emit("welcome", "probando");
 
 socket.on('save-message', function (data) {

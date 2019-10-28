@@ -485,6 +485,7 @@ import json from '../../environments/env.json'
 import chatsito from './Chat';
 import * as io from 'socket.io-client'
 import jwtDecode from 'jwt-decode';
+import EventBus from './EventBus';
     import cabecera from './cabecera';
 export default {
     components:{
@@ -522,9 +523,6 @@ export default {
     methods: {
         ingresar(salita){
             if(!salita.Miembros.includes(this.usuario) && salita.Miembros.length < 4){
-                console.log(salita.Miembros);
-                console.log(this.usuario);
-                console.log(salita.Miembros.includes(this.usuario));
               salita.Miembros.push(this.usuario);
                 if(salita.CantidadActual < 4){
                 let uri = json.IP + json.PORT + `sala/actualizar/${salita._id}`;
@@ -550,7 +548,8 @@ export default {
         this.salaNueva.creador = this.usuario;
         let uri = json.IP + json.PORT + 'sala/crear';
     this.axios.post(uri, this.salaNueva).then(res => {
-       this.$router.push({name: 'partida'});
+        
+       this.$router.push({name: 'partida', params: {sala: res.data.IDSala}});
     })
     }
     },
