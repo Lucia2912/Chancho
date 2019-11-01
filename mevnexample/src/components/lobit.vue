@@ -527,13 +527,13 @@ export default {
                 if(salita.CantidadActual < 4){
                 let uri = json.IP + json.PORT + `sala/actualizar/${salita._id}`;
                 this.axios.post(uri, salita).then(res => {
-                    this.$router.push({name: 'partida'});
+                    this.$router.push({name: 'partida',  params: {sala: salita._id}});
                 })
                 } else {
                      alert('Solo se admiten hasta 4 usuarios');
                 }
             } else {
-               this.$router.push({name: 'partida'});
+               this.$router.push({name: 'partida',  params: {sala: salita._id}});
             }
         },
         addRow(txt){

@@ -195,6 +195,7 @@ let esteDivElegido = this.divElegido;
 
 this.socket.emit('getIdJugador');
 
+let rutera =this.$route.params.sala;
   this.socket.on('idJugador',function(data){
     if(idJugador==0 && !yaEntroCero){
     	
@@ -203,7 +204,7 @@ this.socket.emit('getIdJugador');
     }
     
     idJugadorExtra = data;
-    esteSocket.emit('tieneId');
+    esteSocket.emit('tieneId',rutera);
     this.idJugador = idJugador;
     idJugadoroso = idJugador;
   });
@@ -224,7 +225,7 @@ var cartasDelJug3Colocada;
 this.socket.on('cartasJugador', function(data){
  
 
-
+console.log("esta es la id de la sala "+this.socket.idSala);
 let entro = false;
   for(let i = 0; i<=3; i++){
     cartasDelJug1Colocada = false;

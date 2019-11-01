@@ -76,16 +76,34 @@ let cartaJugador3 = [];
 let cartaJugador4 = [];
 
 
+let salas = [];
+
 
 io.sockets.on('connection', function (socket) {
 
 console.log('ON');
 
 socket.on('CrearPartida', function(data){
+  let existe = false;
+  for(let i = 0; i<salas.length; i++){
+
+    if(salas[i].idSala == data){
+existe = true;
+    }
+
+  }
+  if(!existe){
   socket.join(data);
-  //console.log(io.sockets.clients(data));
-   io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
  
+   io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
+   salas.push({idSala:data, cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0});
+    socket.idSala = data;
+  }else{
+    socket.join(data);
+    socket.idSala = data;
+  }
+    
+
 });
 socket.emit("welcome", "probando");
 
@@ -95,16 +113,32 @@ socket.on('save-message', function (data) {
 });
 
 socket.on('getIdJugador', function(socket){
-  if(idJugador <= 3){
-    
-  io.sockets.emit("idJugador", idJugador);
-  idJugador++;
+  
+
+  console.log(salas);
+ 
+  for(let i = 0; i<salas.length; i++){
+    if(salas[i].idSala == this.idSala){
+   
+  
+ let idJugadore = salas[i].idJugador;
+
+  if(idJugadore <= 3){
+    // probar con io.sockets.in(salas[i].idSala).emit("idJugador", idJugadore);
+  io.sockets.emit("idJugador", idJugadore);
+  idJugadore++;
+  salas[i].idJugador = idJugadore;
   }
+}
+
+}
 });
 
 let manoActual = [ases, dos, tres, cuatro];
-    socket.on('tieneId', function(socket){
-		io.sockets.emit('cartasJugador',manoActual);
+    socket.on('tieneId', function(idSala){
+  //	io.sockets.emit('cartasJugador',manoActual);
+  console.log(idSala);
+  io.sockets.in(idSala).emit('cartasJugador', manoActual);
     });
 
 
