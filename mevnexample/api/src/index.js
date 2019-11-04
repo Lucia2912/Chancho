@@ -96,7 +96,7 @@ existe = true;
   socket.join(data);
  
    io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
-   salas.push({idSala:data, cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0});
+   salas.push({idSala:data, cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0});
     socket.idSala = data;
   }else{
     socket.join(data);
@@ -125,7 +125,8 @@ socket.on('getIdJugador', function(socket){
 
   if(idJugadore <= 3){
     // probar con io.sockets.in(salas[i].idSala).emit("idJugador", idJugadore);
-  io.sockets.emit("idJugador", idJugadore);
+  //io.sockets.emit("idJugador", idJugadore);
+  io.sockets.in(salas[i].idSala).emit("idJugador", idJugadore);
   idJugadore++;
   salas[i].idJugador = idJugadore;
   }
@@ -138,30 +139,42 @@ let manoActual = [ases, dos, tres, cuatro];
     socket.on('tieneId', function(idSala){
   //	io.sockets.emit('cartasJugador',manoActual);
   console.log(idSala);
-  io.sockets.in(idSala).emit('cartasJugador', manoActual);
+  io.sockets.in(idSala).emit('cartasJugador', manoActual, idSala);
     });
 
 
 
     socket.on('moverCarta', function(data){
 
+      console.log("id de sala en mover carta "+data.idSala);
+
+      for(let i = 0; i<salas.length; i++){
+        if(salas[i].idSala == data.idSala){
+
+      
+
     	if(data.idJugador == 0){
-    		cartaJugador1 = [data.palo, data.valor];
+    		salas[i].cartaJugador1 = [data.palo, data.valor];
     	}else if(data.idJugador == 1){
-    		cartaJugador2 = [data.palo, data.valor];
+        salas[i].cartaJugador2 = [data.palo, data.valor];
     	}else if(data.idJugador == 2){
-    		cartaJugador3 = [data.palo, data.valor];
+    		salas[i].cartaJugador3 = [data.palo, data.valor];
     	}else if(data.idJugador == 3){	
-    		cartaJugador4 = [data.palo, data.valor];
+    		salas[i].cartaJugador4 = [data.palo, data.valor];
     	}
 
 
-    	losCuatroMovieronCartas++;
-    	if(losCuatroMovieronCartas == 4){
-    		let cartasAMover = [cartaJugador1,cartaJugador2, cartaJugador3, cartaJugador4];
-    		io.sockets.emit('cambiarDeLugarCarta',cartasAMover);
-			losCuatroMovieronCartas = 0;
+    	salas[i].cuatroJugMovieron++;
+    	if(salas[i].cuatroJugMovieron == 4){
+    		let cartasAMover = [salas[i].cartaJugador1,salas[i].cartaJugador2, salas[i].cartaJugador3, salas[i].cartaJugador4];
+        io.sockets.in(salas[i].idSala).emit('cambiarDeLugarCarta',cartasAMover);
+       
+        salas[i].cuatroJugMovieron = 0;
 			console.log("Se emitio una vez");
-    	}
+      }
+      
+
+    }
+  }
     });
 });

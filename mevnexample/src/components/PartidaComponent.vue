@@ -24,6 +24,8 @@ let esteDeckardo;
 let socketardo = io('localhost:4000');
 
 
+
+
 function seleccionarCarta(alturita, posicionIzquierda){
  let misCartas = document.getElementsByClassName('face');
 
@@ -222,10 +224,10 @@ var cartasDelJug2Colocada;
 var cartasDelJug3Colocada;
 
 
-this.socket.on('cartasJugador', function(data){
- 
+this.socket.on('cartasJugador', function(data, idSala){
+ console.log("cartaJugador con idSala: "+idSala);
 
-console.log("esta es la id de la sala "+this.socket.idSala);
+
 let entro = false;
   for(let i = 0; i<=3; i++){
     cartasDelJug1Colocada = false;
@@ -837,8 +839,8 @@ let indiceY =this.cartaElegida.y;
 //let esteDeckito = this.deck;
 
 
-
-this.socket.emit('moverCarta',{palo: cartaElegidosa.suit, valor: cartaElegidosa.rank, idJugador: idJugadoroso});
+let idSalaGeneral = this.$route.params.sala;
+this.socket.emit('moverCarta',{palo: cartaElegidosa.suit, valor: cartaElegidosa.rank, idJugador: idJugadoroso, idSala: idSalaGeneral});
 
 
 //por aca pasa una vez
