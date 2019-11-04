@@ -10,6 +10,7 @@
 
 <script>
 import EventBus from './EventBus';
+import jwtDecode from 'jwt-decode';
 //let cardeame = require('../../node_modules/deck-of-cards/dist/deck.min.js');
 import Deck from 'deck-of-cards/dist/deck';
 import json from '../../environments/env.json'
@@ -152,13 +153,16 @@ console.log(divoso.parentElement);
 
 export default {
  data(){
+   const token = localStorage.usertoken;
+   const decode = jwtDecode(token);
    return{
      container:{},
      deck:{},
      socket : io(json.IP + json.PORT),
      divElegido:{},
      cartaElegida:{},
-     idJugador:0
+     idJugador:0,
+     usuario: decode
    };
  },
  created(){
@@ -195,7 +199,7 @@ let estaCartaElegida = this.cartaElegida;
 let esteDivElegido = this.divElegido;
 
 
-this.socket.emit('getIdJugador');
+this.socket.emit('getIdJugador', this.usuario._id);
 
 let rutera =this.$route.params.sala;
   this.socket.on('idJugador',function(data){

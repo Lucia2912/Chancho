@@ -96,7 +96,7 @@ existe = true;
   socket.join(data);
  
    io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
-   salas.push({idSala:data, cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0});
+   salas.push({idSala:data, cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[]});
     socket.idSala = data;
   }else{
     socket.join(data);
@@ -115,11 +115,11 @@ socket.on('save-message', function (data) {
 socket.on('getIdJugador', function(socket){
   
 
-  console.log(salas);
+  console.log("jugador "+socket);
  
   for(let i = 0; i<salas.length; i++){
     if(salas[i].idSala == this.idSala){
-   
+      if(!salas[i].idMiembros.includes(socket)){
   
  let idJugadore = salas[i].idJugador;
 
@@ -130,6 +130,11 @@ socket.on('getIdJugador', function(socket){
   idJugadore++;
   salas[i].idJugador = idJugadore;
   }
+  salas[i].idMiembros.push(socket);
+} else {
+  io.sockets.in(salas[i].idSala).emit("idJugador", salas[i].idMiembros.indexOf(socket));
+  console.log("Ya tiene lugar en la partida en el lugar "+salas[i].idMiembros.indexOf(socket));
+}
 }
 
 }
