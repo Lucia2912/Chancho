@@ -503,7 +503,8 @@ export default {
             errors: [],
             chat: {},
             rooms:[],
-            socket: io(json.IP + json.PORT)
+            socket: io(json.IP + json.PORT),
+            Jugadores: []
             };
         },
         created(){
@@ -522,7 +523,10 @@ export default {
         }, 
     methods: {
         ingresar(salita){
-            if(!salita.Miembros.includes(this.usuario) && salita.Miembros.length < 4){
+            for(let i =0; i<salita.Miembros.length; i++){
+                this.Jugadores.push(salita.Miembros[i]._id);
+            }
+            if(!this.Jugadores.includes(this.usuario._id) && salita.Miembros.length < 4){
               salita.Miembros.push(this.usuario);
                 if(salita.CantidadActual < 4){
                 let uri = json.IP + json.PORT + `sala/actualizar/${salita._id}`;
