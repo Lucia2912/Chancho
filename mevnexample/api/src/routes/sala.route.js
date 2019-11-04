@@ -34,7 +34,8 @@ salas.post('/crear', (req, res) => {
         Estado: 'En espera',
         Fecha: hoy,
         Descripcion: req.body.descripcion,
-        Creador: req.body.creador
+        Creador: req.body.creador,
+        Miembros: [req.body.creador]
     }
     Sala.create(sala)
     .then(sala=> {
