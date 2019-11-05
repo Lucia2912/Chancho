@@ -37,6 +37,11 @@ salas.post('/crear', (req, res) => {
         Creador: req.body.creador,
         Miembros: [req.body.creador]
     }
+    Sala.findOne({
+        Nombre: req.body.nombre
+    })
+    .then(salita => {
+        if(!salita){
     Sala.create(sala)
     .then(sala=> {
         res.json({IDSala: sala._id});
@@ -44,7 +49,17 @@ salas.post('/crear', (req, res) => {
     .catch(err=> {
         res.send('error: '+ err);
     })
+} else {
+    let errores = {errors:{nombre: 'Ya existe una sala con ese nombre'}};
+    res.setHeader('Content-Type', 'application/json');
+    res.statusCode = 422;
+    res.send(errores);
+}
 })
+.catch(err => {
+res.send('error: ' + err);
+});
+});
 
 salas.get('/listar', (req,res)=> {
       Sala.find({}, function(err, salas) {
