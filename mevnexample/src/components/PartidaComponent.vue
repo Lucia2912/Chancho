@@ -10,6 +10,7 @@
 
 <script>
 import EventBus from './EventBus';
+import $ from 'jquery';
 import jwtDecode from 'jwt-decode';
 //let cardeame = require('../../node_modules/deck-of-cards/dist/deck.min.js');
 import Deck from 'deck-of-cards/dist/deck';
@@ -166,6 +167,8 @@ export default {
    };
  },
  created(){
+   $('body').removeClass('modal-open');
+   $('.modal-backdrop').remove();
    console.log(this.$route.params.sala);
    },
    beforeUpdate(){

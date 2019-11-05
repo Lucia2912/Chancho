@@ -567,7 +567,6 @@ export default {
         this.salaNueva.creador = this.usuario;
         let uri = json.IP + json.PORT + 'sala/crear';
     this.axios.post(uri, this.salaNueva).then(res => {
-        
        this.$router.push({name: 'partida', params: {sala: res.data.IDSala}});
     }) .catch(error => {
         let err = error.response;

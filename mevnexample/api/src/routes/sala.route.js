@@ -7,23 +7,25 @@ const User = require('../models/User.model');
 
 
 salas.post('/actualizar/:id', (req, res) => {
-    Sala.findById(req.params.id, function(err, sala) {
+    Sala.findById(req.params.id, function (err, sala) {
         if (!sala)
-          res.status(404).send("data is not found");
+            res.status(404).send("data is not found");
         else {
             sala.CantidadActual = req.body.Miembros.length;
             sala.Miembros = req.body.Miembros;
-            if(sala.CantidadActual == 4){
+            if (sala.CantidadActual == 4) {
                 sala.Estado = "Completa";
             }
+            let ultimoIngresado = req.body.Miembros[req.body.Miembros.length - 1];
+            sala.Chancho.push({Jugador: ultimoIngresado, Palabra: null});
             sala.save().then(() => {
-              res.json('Update complete');
-          })
-          .catch(() => {
-                res.status(400).send("unable to update the database");
-          });
+                res.json('Update complete');
+            })
+                .catch(() => {
+                    res.status(400).send("unable to update the database");
+                });
         }
-      });
+    });
 })
 
 salas.post('/crear', (req, res) => {
@@ -35,43 +37,44 @@ salas.post('/crear', (req, res) => {
         Fecha: hoy,
         Descripcion: req.body.descripcion,
         Creador: req.body.creador,
-        Miembros: [req.body.creador]
+        Miembros: [req.body.creador],
+        Chancho: [{ Jugador: req.body.creador, Palabra: null }]
     }
     Sala.findOne({
         Nombre: req.body.nombre
     })
-    .then(salita => {
-        if(!salita){
-    Sala.create(sala)
-    .then(sala=> {
-        res.json({IDSala: sala._id});
-    })
-    .catch(err=> {
-        res.send('error: '+ err);
-    })
-} else {
-    let errores = {errors:{nombre: 'Ya existe una sala con ese nombre'}};
-    res.setHeader('Content-Type', 'application/json');
-    res.statusCode = 422;
-    res.send(errores);
-}
-})
-.catch(err => {
-res.send('error: ' + err);
-});
+        .then(salita => {
+            if (!salita) {
+                Sala.create(sala)
+                    .then(sala => {
+                        res.json({ IDSala: sala._id });
+                    })
+                    .catch(err => {
+                        res.send('error: ' + err);
+                    })
+            } else {
+                let errores = { errors: { nombre: 'Ya existe una sala con ese nombre' } };
+                res.setHeader('Content-Type', 'application/json');
+                res.statusCode = 422;
+                res.send(errores);
+            }
+        })
+        .catch(err => {
+            res.send('error: ' + err);
+        });
 });
 
-salas.get('/listar', (req,res)=> {
-      Sala.find({}, function(err, salas) {
-    	User.populate(salas, {path: "Creador"},function(err, salas){
-            User.populate(salas, {path: "Miembros"}, function(err, salas){
+salas.get('/listar', (req, res) => {
+    Sala.find({}, function (err, salas) {
+        User.populate(salas, { path: "Creador" }, function (err, salas) {
+            User.populate(salas, { path: "Miembros" }, function (err, salas) {
                 res.status(200).send(salas);
             })
-        	
-        }); 
+
+        });
     });
 
 })
 
 
-    module.exports = salas;
+module.exports = salas;
