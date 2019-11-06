@@ -26,11 +26,16 @@ Crear sala
         </button>
       </div>
       <div class="modal-body">
-       <input type="text" class="bton form-control search-btn col-xs-6" placeholder="Nombre..." name="fname" v-model="salaNueva.nombre"><br>
+       <input type="text" class="bton form-control search-btn col-xs-6" placeholder="Nombre..." name="fname" v-model="salaNueva.nombre" v-bind:class="{ 'is-invalid': hasErrors.nombre }">
+        <div class="invalid-feedback">
+            <span v-if="hasErrors.nombre" class="help-lock">
+                <strong>{{errorMessage.nombre}}</strong>
+            </span>
+        </div>
        <input type="text" name="lname" class="bton form-control search-btn col-xs-6" placeholder="Breve descripción" maxlength="100" v-model="salaNueva.descripcion">
       </div>
       <div class="modal-footer">
-          <button @click="crearSalita" type="button" class="btn btn-primary" data-dismiss="modal">Crear</button>
+          <button @click.stop="crearSalita" type="button" class="btn btn-primary" data-dismiss="modal">Crear</button>
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
       </div>
     </div>
@@ -504,8 +509,14 @@ export default {
             chat: {},
             rooms:[],
             socket: io(json.IP + json.PORT),
-            Jugadores: []
-            };
+            Jugadores: [],
+            hasErrors: {
+                nombre: false
+            },
+            errorMessage: {
+                nombre: null
+            }     
+        };
         },
         created(){
               let uri = json.IP + json.PORT + 'sala/listar';
@@ -549,12 +560,30 @@ export default {
             this.inputs.splice(index, 1);
         },
         crearSalita(){
+            let vm = this.hasErrors;
+          vm.nombre = false;
+          let _vm = this.errorMessage;
+          _vm.nombre = null;
         this.salaNueva.creador = this.usuario;
         let uri = json.IP + json.PORT + 'sala/crear';
     this.axios.post(uri, this.salaNueva).then(res => {
-        
        this.$router.push({name: 'partida', params: {sala: res.data.IDSala}});
-    })
+    }) .catch(error => {
+        let err = error.response;
+        console.log(err);
+        if (err.statusText === "Unprocessable Entity") {
+            if (err.data) {
+                  if (err.data.errors.nombre) {
+                    vm.nombre = true;
+                    _vm.nombre = "El nombre de la sala se encuentra en uso";
+                    setTimeout(function() {
+                      vm.nombre = false;
+                      _vm.nombre = null;
+                      }, 5000);
+                  }
+                }
+              }
+    });
     }
     },
     mounted() {

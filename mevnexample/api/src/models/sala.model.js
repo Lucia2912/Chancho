@@ -25,7 +25,12 @@ const SalaSchema = new Schema({
      type: Schema.ObjectId, 
      ref: 'User'
    },
-   Miembros: [{type: Schema.ObjectId, ref: 'User'}]
+   Miembros: [{type: Schema.ObjectId, ref: 'User'}],
+   Ganador: {
+    type: Schema.ObjectId, 
+    ref: 'User'
+  },
+  Chancho: [{Jugador: {type: Schema.ObjectId, ref: 'User'}, Palabra: String}]
 });
 
 module.exports = Sala = mongoose.model('salas', SalaSchema);
