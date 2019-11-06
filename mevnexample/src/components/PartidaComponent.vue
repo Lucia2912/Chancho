@@ -4,7 +4,9 @@
 <div id="container"></div>
 <button v-on:click.stop="iniciarPartida">Iniciar Partida</button>
 <button @click="moverCarta">Mover</button>
-<button id="btnChancho" style="display: none;">Chancho!</button>
+<button id="btnChancho" @click="cantarChancho" style="display: none;">Tenes Chancho!</button>
+<button style="display: none;" @click="apretaAlChancho" id="apretarChancho">Chancho!!</button>
+<label id="timer"></label>
 </div>
 </template>
 
@@ -13,8 +15,9 @@ import EventBus from './EventBus';
 import jwtDecode from 'jwt-decode';
 //let cardeame = require('../../node_modules/deck-of-cards/dist/deck.min.js');
 import Deck from 'deck-of-cards/dist/deck';
-import json from '../../environments/env.json'
+import json from '../../environments/env.json';
 import io from 'socket.io-client';
+import firstImpression from 'deck-of-cards/dist/firstImpression.js';
 
 let cartaElegidosa;
 let idJugadoroso;
@@ -25,7 +28,20 @@ let esteDeckardo;
 let socketardo = io('localhost:4000');
 
 
-
+function getCookie(cname) {
+  var name = cname + "=";
+  var ca = document.cookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
 
 function seleccionarCarta(alturita, posicionIzquierda){
  let misCartas = document.getElementsByClassName('face');
@@ -199,6 +215,20 @@ let estaCartaElegida = this.cartaElegida;
 let esteDivElegido = this.divElegido;
 
 
+let contadorTiempo;
+var x = setInterval(function() {
+contadorTiempo=10;
+ 
+
+ 
+
+console.log(contadorTiempo);
+  // Display the result in the element with id="demo"
+  document.getElementById("timer").innerHTML =  contadorTiempo + "s ";
+contadorTiempo--;
+ 
+}, 1000);
+
 this.socket.emit('getIdJugador', this.usuario._id);
 
 let rutera =this.$route.params.sala;
@@ -227,9 +257,23 @@ var cartasDelJug1Colocada;
 var cartasDelJug2Colocada;
 var cartasDelJug3Colocada;
 
-
+let yaEntroaPagina = false;
 this.socket.on('cartasJugador', function(data, idSala){
- console.log("cartaJugador con idSala: "+idSala);
+
+
+let nuevaGalleta = getCookie("HasVisited"+idSala+idJugadorExtra);
+document.cookie = "HasVisited"+idSala+idJugadorExtra+"=true";
+
+if(nuevaGalleta){
+  console.log("Ya entró a esta página");
+  console.log("y esta es la id del jugador "+idJugadorExtra);
+
+ 
+}else{
+  console.log("Primera vez que entra");
+}
+ 
+
 
 
 let entro = false;
@@ -390,6 +434,7 @@ let entro = false;
  if(!estoyJugandoYa){
 
   esteDeckardo.cards[arregloEnCuestion[k]].setSide('front');
+  console.log("id de Jugador con cartas arriba "+idJugadorExtra);
 
  }
       }
@@ -785,6 +830,15 @@ cartaJugador2.animateTo({
 
 });
 
+this.socket.on("totalArregloChancho", function(data){
+console.log("Este es el actual arreglo chancho "+data);
+});
+
+this.socket.on("botonChanchoMostrado", function(){
+ document.getElementById("apretarChancho").style.display = "block";
+});
+
+
  },
  methods:{
      iniciarPartida(){
@@ -794,6 +848,18 @@ cartaJugador2.animateTo({
       this.socket.on('cartasJugador', function(data){
         console.log("cartasJugador");
       });
+
+
+     },
+     cantarChancho(){
+       
+       this.socket.emit("mostraElBotonChancho", this.$route.params.sala);
+       
+
+     },
+     apretaAlChancho(){
+       this.socket.emit("cantaChancho",{idJugador: idJugadoroso, idSala:this.$route.params.sala});
+
 
 
      },

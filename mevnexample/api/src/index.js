@@ -96,7 +96,7 @@ existe = true;
   socket.join(data);
  
    io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
-   salas.push({idSala:data, cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[]});
+   salas.push({idSala:data, conteoChancho:0, tieneChanchoJug1:[], tieneChanchoJug2:[], tieneChanchoJug3:[], tieneChanchoJug4:[], cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[]});
     socket.idSala = data;
   }else{
     socket.join(data);
@@ -105,17 +105,20 @@ existe = true;
     
 
 });
+
+
+
 socket.emit("welcome", "probando");
 
 socket.on('save-message', function (data) {
-  console.log(data);
+ 
   io.sockets.emit('new-message', { message: data });
 });
 
 socket.on('getIdJugador', function(socket){
   
 
-  console.log("jugador "+socket);
+
  
   for(let i = 0; i<salas.length; i++){
     if(salas[i].idSala == this.idSala){
@@ -131,9 +134,10 @@ socket.on('getIdJugador', function(socket){
   salas[i].idJugador = idJugadore;
   }
   salas[i].idMiembros.push(socket);
-} else {
+    } else {
+		//aca habria que mandar una var diciendo que este jugador ya jugo, para repartir bien, de vuelta
   io.sockets.in(salas[i].idSala).emit("idJugador", salas[i].idMiembros.indexOf(socket));
-  console.log("Ya tiene lugar en la partida en el lugar "+salas[i].idMiembros.indexOf(socket));
+ 
 }
 }
 
@@ -143,15 +147,49 @@ socket.on('getIdJugador', function(socket){
 let manoActual = [ases, dos, tres, cuatro];
     socket.on('tieneId', function(idSala){
   //	io.sockets.emit('cartasJugador',manoActual);
-  console.log(idSala);
+
   io.sockets.in(idSala).emit('cartasJugador', manoActual, idSala);
     });
 
 
+    socket.on('cantaChancho', function(data){
+
+
+
+      let arregloChancho = ['C','H','A','N','C','H','O'];
+
+      for(let i = 0; i<salas.length; i++){
+        if(salas[i].idSala == data.idSala){
+
+          salas[i].conteoChancho++;
+          if(salas[i].conteoChancho == 4){
+
+          if(data.idJugador == 0){
+            salas[i].tieneChanchoJug1.push(arregloChancho[salas[i].tieneChanchoJug1.length]);
+          }else if(data.idJugador == 1){
+            salas[i].tieneChanchoJug2.push(arregloChancho[salas[i].tieneChanchoJug2.length]);
+          }else if(data.idJugador == 2){
+            salas[i].tieneChanchoJug3.push(arregloChancho[salas[i].tieneChanchoJug3.length]);
+          }else if(data.idJugador == 3){
+            salas[i].tieneChanchoJug4.push(arregloChancho[salas[i].tieneChanchoJug4.length]);
+          }
+          salas[i].conteoChancho = 0;
+        }
+
+        }
+      }
+console.log(salas);
+    });
+
+    socket.on('mostraElBotonChancho', function(idSala){
+
+      io.sockets.in(idSala).emit('botonChanchoMostrado');
+    });
+
 
     socket.on('moverCarta', function(data){
 
-      console.log("id de sala en mover carta "+data.idSala);
+     
 
       for(let i = 0; i<salas.length; i++){
         if(salas[i].idSala == data.idSala){
