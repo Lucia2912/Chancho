@@ -2,10 +2,11 @@
 
 <div>
 <div id="container"></div>
-<button v-on:click.stop="iniciarPartida">Iniciar Partida</button>
+<button v-on:click="iniciarPartida">Iniciar Partida</button>
 <button @click="moverCarta">Mover</button>
 <button id="btnChancho" @click="cantarChancho" style="display: none;">Tenes Chancho!</button>
 <button style="display: none;" @click="apretaAlChancho" id="apretarChancho">Chancho!!</button>
+
 <label id="timer"></label>
 </div>
 </template>
@@ -47,7 +48,7 @@ function getCookie(cname) {
 function seleccionarCarta(alturita, posicionIzquierda){
  let misCartas = document.getElementsByClassName('face');
 
-  console.log(misCartas);
+ 
 
   for(let c = 0; c<misCartas.length; c++){
   
@@ -153,7 +154,7 @@ esteDeckardo.cards.forEach(function (card, i) {
   }
 });
 
-console.log(divoso.parentElement);
+
 };
 //});
 
@@ -437,7 +438,7 @@ let entro = false;
  if(!estoyJugandoYa){
 
   esteDeckardo.cards[arregloEnCuestion[k]].setSide('front');
-  console.log("id de Jugador con cartas arriba "+idJugadorExtra);
+
 
  }
       }
@@ -494,8 +495,7 @@ let yDel4 = cartaJugador4.y;
 
 
 
-console.log("este es divoso: ");
-console.log(divoso.parentElement);
+
 if(this.idJugador == 0){
 
 
@@ -841,16 +841,74 @@ this.socket.on("botonChanchoMostrado", function(){
  document.getElementById("apretarChancho").style.display = "block";
 });
 
+this.socket.on("repartirDespuesChancho", function(cartasRepartir){
+
+console.log(cartasRepartir);
+
+esteDeckardo.sort();
+
+ esteDeckardo.cards.forEach(function (card, i) {
+                card.setSide('back');
+ });
+
+
+
+
+let cartonasJug1 = cartasRepartir[0];
+let cartonasJug2 = cartasRepartir[1];
+let cartonasJug3 = cartasRepartir[2];
+let cartonasJug4 = cartasRepartir[3];
+
+let contador = 0;
+if(idJugadoroso == 0){
+
+for(let j=0; j<cartonasJug1.length; j++){
+
+    esteDeckardo.cards.forEach(function (card, i) {
+  if(card.i == cartonasJug1[j]){
+    console.log(card);
+      card.animateTo({
+          delay: 1000,
+          duration: 250,
+
+          x: 400 +contador,
+          y: 10,
+          onComplete: function onComplete(){
+            // seleccionarCarta(10, false);
+          }
+        });
+        contador = contador + 60;
+  }
+});
+}
+
+}else if(idJugadoroso == 1){
+  
+}else if(idJugadoroso == 2){
+
+}else if(idJugadoroso == 3){
+
+}
+
+});
+
 
  },
  methods:{
      iniciarPartida(){
-      console.log(cartaElegidosa);
-      console.log(idJugadoroso);
-      this.socket.emit('tieneId');
-      this.socket.on('cartasJugador', function(data){
-        console.log("cartasJugador");
-      });
+      
+       console.log(esteDeckardo.cards);
+    esteDeckardo.cards.forEach(function (card, i) {
+    card.setSide('front');
+});
+esteDeckardo.shuffle();
+esteDeckardo.sort();
+esteDeckardo.sort();
+console.log("cartas individuales");
+console.log(esteDeckardo.cards[0].i);
+console.log(esteDeckardo.cards[13].i);
+console.log(esteDeckardo.cards[26].i);
+console.log(esteDeckardo.cards[39].i);
 
 
      },
@@ -862,7 +920,7 @@ this.socket.on("botonChanchoMostrado", function(){
      },
      apretaAlChancho(){
        this.socket.emit("cantaChancho",{idJugador: idJugadoroso, idSala:this.$route.params.sala});
-
+ // esteDeckardo.shuffle();
 
 
      },
@@ -879,7 +937,7 @@ this.socket.on("botonChanchoMostrado", function(){
 
          var classList = cartasBocaArriba[h].parentElement.className.split(' ');
         
-         console.log(classList[2]);
+        
          if(todasCartasIguales == ""){
            todasCartasIguales = classList[2];
          }else if(todasCartasIguales == classList[2])
@@ -891,7 +949,7 @@ this.socket.on("botonChanchoMostrado", function(){
          }
 
        }
-       console.log("Son iguales "+sonIguales+" "+suma);
+      
 
       if(sonIguales && suma == 3){
         document.getElementById("btnChancho").style.display = "block";

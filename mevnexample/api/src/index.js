@@ -174,12 +174,27 @@ let manoActual = [ases, dos, tres, cuatro];
             salas[i].tieneChanchoJug4.push(arregloChancho[salas[i].tieneChanchoJug4.length]);
           }
           salas[i].conteoChancho = 0;
+          let mazardo = [0,13,26,39,1,14,27,40,2,15,28,41,3,16,29,42];
+          mezclar(mazardo);
+          mezclar(mazardo);
+         
+let unaMano = mazardo.splice(0,4);
+let dosMano = mazardo.splice(0,4);
+let tresMano = mazardo.splice(0,4);
+let cuatroMano = mazardo.splice(0,4);
+let manoActuale = [unaMano, dosMano, tresMano, cuatroMano];
+console.log("esta es la mano atual "+manoActuale);
+          io.sockets.in(data.idSala).emit('repartirDespuesChancho', manoActuale);
         }
 
         }
       }
-console.log(salas);
+
+      
+
     });
+
+
 
     socket.on('mostraElBotonChancho', function(idSala){
 
