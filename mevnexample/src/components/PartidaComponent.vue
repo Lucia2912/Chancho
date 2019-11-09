@@ -219,19 +219,19 @@ let estaCartaElegida = this.cartaElegida;
 let esteDivElegido = this.divElegido;
 
 
-let contadorTiempo;
+/*let contadorTiempo;
 var x = setInterval(function() {
 contadorTiempo=10;
  
 
  
 
-console.log(contadorTiempo);
+
   // Display the result in the element with id="demo"
   document.getElementById("timer").innerHTML =  contadorTiempo + "s ";
 contadorTiempo--;
  
-}, 1000);
+}, 1000);*/
 
 this.socket.emit('getIdJugador', this.usuario._id);
 
@@ -843,7 +843,6 @@ this.socket.on("botonChanchoMostrado", function(){
 
 this.socket.on("repartirDespuesChancho", function(cartasRepartir){
 
-console.log(cartasRepartir);
 
 esteDeckardo.sort();
 
@@ -865,8 +864,10 @@ if(idJugadoroso == 0){
 for(let j=0; j<cartonasJug1.length; j++){
 
     esteDeckardo.cards.forEach(function (card, i) {
+       
   if(card.i == cartonasJug1[j]){
-    console.log(card);
+    card.setSide('front');
+
       card.animateTo({
           delay: 1000,
           duration: 250,
@@ -874,10 +875,53 @@ for(let j=0; j<cartonasJug1.length; j++){
           x: 400 +contador,
           y: 10,
           onComplete: function onComplete(){
-            // seleccionarCarta(10, false);
+             seleccionarCarta(10, false);
           }
         });
         contador = contador + 60;
+
+  }else if(card.i == cartonasJug2[j]){
+    
+    contador = 0;
+      card.animateTo({
+          delay: 1000,
+          duration: 250,
+
+          x: 10 +contador,
+          y: -250,
+          onComplete: function onComplete(){
+            
+          }
+        });
+    
+    contador = contador + 60;
+  }else if(card.i == cartonasJug3[j]){
+     contador = 0;
+      card.animateTo({
+          delay: 1000,
+          duration: 250,
+
+          x: -400 +contador,
+          y: 10,
+          onComplete: function onComplete(){
+            
+          }
+        });
+  
+  }else if(card.i == cartonasJug4[j] ){
+      contador = 0;
+        
+      card.animateTo({
+          delay: 1000,
+          duration: 250,
+
+          x: 10 +contador,
+          y: 190,
+          onComplete: function onComplete(){
+            
+          }
+        });
+
   }
 });
 }
