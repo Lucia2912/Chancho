@@ -843,12 +843,11 @@ this.socket.on("botonChanchoMostrado", function(){
 
 this.socket.on("repartirDespuesChancho", function(cartasRepartir){
 
+//esteDeckardo.unmount();
+//esteDeckardo.mount(document.getElementById("container"));
 
-esteDeckardo.sort();
 
- esteDeckardo.cards.forEach(function (card, i) {
-                card.setSide('back');
- });
+
 
 
 
@@ -858,79 +857,233 @@ let cartonasJug2 = cartasRepartir[1];
 let cartonasJug3 = cartasRepartir[2];
 let cartonasJug4 = cartasRepartir[3];
 
+let nuevasCardsJug1 = [];
+let nuevasCardsJug2 = [];
+let nuevasCardsJug3 = [];
+let nuevasCardsJug4 = [];
 let contador = 0;
-if(idJugadoroso == 0){
 
 for(let j=0; j<cartonasJug1.length; j++){
 
     esteDeckardo.cards.forEach(function (card, i) {
-       
-  if(card.i == cartonasJug1[j]){
-    card.setSide('front');
+       if(card.i == cartonasJug1[j]){
+         nuevasCardsJug1.push(card);
+       }else if(card.i == cartonasJug2[j]){
+         nuevasCardsJug2.push(card);
+       }else if(card.i == cartonasJug3[j]){
+         nuevasCardsJug3.push(card);
+       }else if(card.i == cartonasJug4[j]){
+         nuevasCardsJug4.push(card);
+       }
+  
+});
+}
 
-      card.animateTo({
-          delay: 1000,
+
+if(idJugadoroso == 0){
+
+let contador = 0;
+
+  for(let g=0; g<nuevasCardsJug1.length;g++){
+    nuevasCardsJug1[g].setSide('front');
+
+      nuevasCardsJug1[g].animateTo({
+          delay: 1000 + g * 50,
           duration: 250,
 
           x: 400 +contador,
           y: 10,
           onComplete: function onComplete(){
              seleccionarCarta(10, false);
+                console.log("complete g:"+g+" contador:"+contador+" jug"+1);
           }
         });
-        contador = contador + 60;
-
-  }else if(card.i == cartonasJug2[j]){
-    
-    contador = 0;
-      card.animateTo({
-          delay: 1000,
-          duration: 250,
-
-          x: 10 +contador,
-          y: -250,
-          onComplete: function onComplete(){
-            
-          }
-        });
-    
-    contador = contador + 60;
-  }else if(card.i == cartonasJug3[j]){
-     contador = 0;
-      card.animateTo({
-          delay: 1000,
-          duration: 250,
-
-          x: -400 +contador,
-          y: 10,
-          onComplete: function onComplete(){
-            
-          }
-        });
-  
-  }else if(card.i == cartonasJug4[j] ){
-      contador = 0;
         
-      card.animateTo({
-          delay: 1000,
-          duration: 250,
 
+        nuevasCardsJug2[g].animateTo({
+ delay: 1000  + g * 50,
+          duration: 250,
           x: 10 +contador,
-          y: 190,
+          y:-250  
+});
+
+ nuevasCardsJug3[g].animateTo({
+ delay: 1000  + g * 50,
+          duration: 250,
+          x: -400 +contador,
+          y:10
+});
+
+ nuevasCardsJug4[g].animateTo({
+ delay: 1000  + g * 50,
+          duration: 250,
+          x: 10 +contador,
+          y:190
+});
+  contador = contador + 60;
+
+}
+/*contador = 0;
+for(let g=0; g<nuevasCardsJug2.length; g++){
+
+nuevasCardsJug2[g].animateTo({
+ delay: 1000,
+          duration: 250,
+          x: 10 +contador,
+          y:-250,
           onComplete: function onComplete(){
             
           }
-        });
-
-  }
 });
+  contador = contador + 60;
 }
+  
+*/
 
 }else if(idJugadoroso == 1){
-  
+let contador = 0;
+
+  for(let g=0; g<nuevasCardsJug1.length;g++){
+nuevasCardsJug2[g].setSide('front');
+      nuevasCardsJug1[g].animateTo({
+          delay: 1000  + g * 50, 
+          duration: 250,
+
+          x: 400 +contador,
+          y: 10
+        });
+        
+
+        nuevasCardsJug2[g].animateTo({
+ delay: 1000  + g * 50,
+          duration: 250,
+          x: 10 +contador,
+          y:-250,
+          onComplete: function onComplete(){
+            seleccionarCarta(-250, false);
+               console.log("complete g:"+g+" contador:"+contador+" jug"+2);
+          }
+});
+
+ nuevasCardsJug3[g].animateTo({
+ delay: 1000  + g * 50,
+          duration: 250,
+          x: -400 +contador,
+          y:10
+});
+
+ nuevasCardsJug4[g].animateTo({
+ delay: 1000  + g * 50,
+          duration: 250,
+          x: 10 +contador,
+          y:190
+});
+  contador = contador + 60;
+
+}
+
+
 }else if(idJugadoroso == 2){
 
+let contador = 0;
+ 
+  for(let g=0; g<nuevasCardsJug1.length;g++){
+ 
+nuevasCardsJug3[g].setSide('front');
+      nuevasCardsJug1[g].animateTo({
+          delay: 1000 + g * 50,
+          duration: 250,
+
+          x: 400 +contador,
+          y: 10
+        });
+        
+
+        nuevasCardsJug2[g].animateTo({
+ delay: 1000 + g * 50,
+          duration: 250,
+          x: 10 +contador,
+          y:-250
+});
+
+ nuevasCardsJug3[g].animateTo({
+ delay: 1000 + g * 50,
+          duration: 250,
+          x: -400 +contador,
+          y:10,
+          onComplete: function onComplete(){
+            seleccionarCarta(10, true);
+               console.log("complete g:"+g+" contador:"+contador+" jug"+3);
+          }
+});
+
+ nuevasCardsJug4[g].animateTo({
+ delay: 1000 + g * 50,
+          duration: 250,
+          x: 10 +contador,
+          y:190
+});
+  contador = contador + 60;
+
+}
+console.log("cartas despues");
+  console.log(esteDeckardo.cards);
+
 }else if(idJugadoroso == 3){
+
+
+let contador = 0;
+
+  for(let g=0; g<nuevasCardsJug1.length;g++){
+    nuevasCardsJug4[g].setSide('front');
+
+      nuevasCardsJug1[g].animateTo({
+          delay: 1000 + g * 50,
+          duration: 250,
+
+          x: 400 +contador,
+          y: 10,
+          onComplete: function onComplete(){
+             console.log("complete g:"+g+" contador:"+contador+" jug"+1);
+          }
+        });
+        
+
+        nuevasCardsJug2[g].animateTo({
+ delay: 1000 + g * 50,
+          duration: 250,
+          x: 10 +contador,
+          y:-250,
+          onComplete: function onComplete(){
+               console.log("complete g:"+g+" contador:"+contador+" jug"+2);
+          }
+});
+
+ nuevasCardsJug3[g].animateTo({
+ delay: 1000 + g * 50,
+          duration: 250,
+          x: -400 +contador,
+          y:10,
+          onComplete: function onComplete(){
+               console.log("complete g:"+g+" contador:"+contador+" jug"+3);
+          }
+});
+
+
+ nuevasCardsJug4[g].animateTo({
+ delay: 1000 + g * 50,
+          duration: 250,
+          x: 10 +contador,
+          y:190,
+          onComplete: function onComplete(){
+            seleccionarCarta(190, false);
+               console.log("complete g:"+g+" contador:"+contador+" jug"+4);
+          }
+});
+  contador = contador + 60;
+
+}
+
 
 }
 
@@ -963,9 +1116,15 @@ console.log(esteDeckardo.cards[39].i);
 
      },
      apretaAlChancho(){
-       this.socket.emit("cantaChancho",{idJugador: idJugadoroso, idSala:this.$route.params.sala});
- // esteDeckardo.shuffle();
+       esteDeckardo.sort();
 
+ esteDeckardo.cards.forEach(function (card, i) {
+                card.setSide('back');
+ });
+       this.socket.emit("cantaChancho",{idJugador: idJugadoroso, idSala:this.$route.params.sala});
+
+  document.getElementById("apretarChancho").style.display = "none";
+  document.getElementById("btnChancho").style.display = "none";
 
      },
      tieneChancho(){
