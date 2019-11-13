@@ -8,7 +8,20 @@
 <button style="display: none;" @click="apretaAlChancho" id="apretarChancho">Chancho!!</button>
 
 <label id="timer"></label>
+
+
+<div id="myModal" class="modal" style="display: none;">
+
+  <!-- Modal content -->
+  <div id="otroModal" class="modal-content">
+    <span class="close">&times;</span>
+    <p>Some text in the Modal..</p>
+  </div>
+
 </div>
+</div>
+
+
 </template>
 
 <script>
@@ -841,7 +854,7 @@ this.socket.on("botonChanchoMostrado", function(){
  document.getElementById("apretarChancho").style.display = "block";
 });
 
-this.socket.on("repartirDespuesChancho", function(cartasRepartir){
+this.socket.on("repartirDespuesChancho", function(cartasRepartir, tablaPuntajeChanchos){
 
 //esteDeckardo.unmount();
 //esteDeckardo.mount(document.getElementById("container"));
@@ -961,7 +974,7 @@ nuevasCardsJug2[g].setSide('front');
           y:-250,
           onComplete: function onComplete(){
             seleccionarCarta(-250, false);
-               console.log("complete g:"+g+" contador:"+contador+" jug"+2);
+              
           }
 });
 
@@ -1013,7 +1026,7 @@ nuevasCardsJug3[g].setSide('front');
           y:10,
           onComplete: function onComplete(){
             seleccionarCarta(10, true);
-               console.log("complete g:"+g+" contador:"+contador+" jug"+3);
+              
           }
 });
 
@@ -1044,7 +1057,7 @@ let contador = 0;
           x: 400 +contador,
           y: 10,
           onComplete: function onComplete(){
-             console.log("complete g:"+g+" contador:"+contador+" jug"+1);
+            
           }
         });
         
@@ -1055,7 +1068,7 @@ let contador = 0;
           x: 10 +contador,
           y:-250,
           onComplete: function onComplete(){
-               console.log("complete g:"+g+" contador:"+contador+" jug"+2);
+              
           }
 });
 
@@ -1065,7 +1078,7 @@ let contador = 0;
           x: -400 +contador,
           y:10,
           onComplete: function onComplete(){
-               console.log("complete g:"+g+" contador:"+contador+" jug"+3);
+              
           }
 });
 
@@ -1077,7 +1090,7 @@ let contador = 0;
           y:190,
           onComplete: function onComplete(){
             seleccionarCarta(190, false);
-               console.log("complete g:"+g+" contador:"+contador+" jug"+4);
+          
           }
 });
   contador = contador + 60;
@@ -1086,6 +1099,61 @@ let contador = 0;
 
 
 }
+var modal = document.getElementById("myModal");
+var otroModal = document.getElementById("otroModal");
+// Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+modal.style.display = "block";
+
+var para = document.createElement("p");
+var para2 = document.createElement("p");
+var para3 = document.createElement("p");
+var para4 = document.createElement("p");
+
+let puntajeJug1="";
+for(let i = 0; i<tablaPuntajeChanchos[0].length; i++){
+  puntajeJug1 = puntajeJug1+ tablaPuntajeChanchos[0][i];
+}
+let puntajeJug2="";
+for(let i = 0; i<tablaPuntajeChanchos[1].length; i++){
+  puntajeJug2 = puntajeJug2 + tablaPuntajeChanchos[1][i];
+}
+let puntajeJug3="";
+for(let i = 0; i<tablaPuntajeChanchos[2].length; i++){
+  puntajeJug3 = puntajeJug3 + tablaPuntajeChanchos[2][i];
+}
+let puntajeJug4="";
+for(let i = 0; i<tablaPuntajeChanchos[3].length; i++){
+  puntajeJug4 = puntajeJug4+ tablaPuntajeChanchos[3][i];
+}
+
+var node = document.createTextNode("Jugador 1: "+puntajeJug1);
+var node2 = document.createTextNode("Jugador 2: "+puntajeJug2);
+var node3 = document.createTextNode("Jugador 3: "+puntajeJug3);
+var node4 = document.createTextNode("Jugador 4: "+puntajeJug4);
+
+para.appendChild(node);
+para2.appendChild(node2);
+para3.appendChild(node3);
+para4.appendChild(node4);
+
+otroModal.appendChild(para);
+otroModal.appendChild(para2);
+otroModal.appendChild(para3);
+otroModal.appendChild(para4);
+
+
+setTimeout(function(){
+  modal.style.display = "none";
+  $('#myModal p').empty();
+ }, 5000);
+// When the user clicks on <span> (x), close the modal
+span.onclick = function() {
+  modal.style.display = "none";
+   $('#myModal div').empty();
+}
+
+
 
 });
 

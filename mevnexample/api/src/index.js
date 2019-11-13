@@ -183,8 +183,9 @@ let dosMano = mazardo.splice(0,4);
 let tresMano = mazardo.splice(0,4);
 let cuatroMano = mazardo.splice(0,4);
 let manoActuale = [unaMano, dosMano, tresMano, cuatroMano];
-console.log("esta es la mano atual "+manoActuale);
-          io.sockets.in(data.idSala).emit('repartirDespuesChancho', manoActuale);
+let todosChanchos = [salas[i].tieneChanchoJug1, salas[i].tieneChanchoJug2, salas[i].tieneChanchoJug3, salas[i].tieneChanchoJug4]
+console.log(salas);
+          io.sockets.in(data.idSala).emit('repartirDespuesChancho', manoActuale, todosChanchos);
         }
 
         }
