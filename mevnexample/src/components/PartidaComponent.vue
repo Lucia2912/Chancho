@@ -2,7 +2,6 @@
 
 <div>
 <div id="container"></div>
-<button v-on:click="iniciarPartida">Iniciar Partida</button>
 <button @click="moverCarta">Mover</button>
 <button id="btnChancho" @click="cantarChancho" style="display: none;">Tenes Chancho!</button>
 <button style="display: none;" @click="apretaAlChancho" id="apretarChancho">Chancho!!</button>
@@ -15,7 +14,7 @@
   <!-- Modal content -->
   <div id="otroModal" class="modal-content">
     <span class="close">&times;</span>
-    <p>Some text in the Modal..</p>
+    <p>Tabla de puntajes</p>
   </div>
 
 </div>
@@ -37,7 +36,7 @@ import firstImpression from 'deck-of-cards/dist/firstImpression.js';
 let cartaElegidosa;
 let idJugadoroso;
 let divoso;
-
+let elQueCantoChancho = false;
 let esteDeckardo;
 
 let socketardo = io('localhost:4000');
@@ -850,10 +849,16 @@ this.socket.on("totalArregloChancho", function(data){
 console.log("Este es el actual arreglo chancho "+data);
 });
 
-this.socket.on("botonChanchoMostrado", function(){
- document.getElementById("apretarChancho").style.display = "block";
-});
 
+this.socket.on("botonChanchoMostrado", function(){
+if(!elQueCantoChancho){
+ document.getElementById("apretarChancho").style.display = "block";
+ 
+}else{
+  elQueCantoChancho = false;
+}
+});
+let nombreUsu = this.usuario.nickname;
 this.socket.on("repartirDespuesChancho", function(cartasRepartir, tablaPuntajeChanchos){
 
 //esteDeckardo.unmount();
@@ -1127,7 +1132,7 @@ for(let i = 0; i<tablaPuntajeChanchos[3].length; i++){
   puntajeJug4 = puntajeJug4+ tablaPuntajeChanchos[3][i];
 }
 
-var node = document.createTextNode("Jugador 1: "+puntajeJug1);
+var node = document.createTextNode(nombreUsu+": "+puntajeJug1);
 var node2 = document.createTextNode("Jugador 2: "+puntajeJug2);
 var node3 = document.createTextNode("Jugador 3: "+puntajeJug3);
 var node4 = document.createTextNode("Jugador 4: "+puntajeJug4);
@@ -1160,30 +1165,19 @@ span.onclick = function() {
 
  },
  methods:{
-     iniciarPartida(){
-      
-       console.log(esteDeckardo.cards);
-    esteDeckardo.cards.forEach(function (card, i) {
-    card.setSide('front');
-});
-esteDeckardo.shuffle();
-esteDeckardo.sort();
-esteDeckardo.sort();
-console.log("cartas individuales");
-console.log(esteDeckardo.cards[0].i);
-console.log(esteDeckardo.cards[13].i);
-console.log(esteDeckardo.cards[26].i);
-console.log(esteDeckardo.cards[39].i);
-
-
-     },
      cantarChancho(){
        
-       this.socket.emit("mostraElBotonChancho", this.$route.params.sala);
+       
        
 
      },
      apretaAlChancho(){
+
+       if(this.tenesCartasIguales()){
+         this.socket.emit("mostraElBotonChancho", this.$route.params.sala);
+         elQueCantoChancho = true;
+       }
+       
        esteDeckardo.sort();
 
  esteDeckardo.cards.forEach(function (card, i) {
@@ -1195,6 +1189,38 @@ console.log(esteDeckardo.cards[39].i);
   document.getElementById("btnChancho").style.display = "none";
 
      },
+    tenesCartasIguales(){
+      
+       let cartasBocaArriba = document.getElementsByClassName('face');
+
+        let todasCartasIguales = "";
+        let sonIguales = false;
+        let suma = 0;
+       for(let h=0; h<cartasBocaArriba.length; h++){
+
+         var classList = cartasBocaArriba[h].parentElement.className.split(' ');
+        
+        
+         if(todasCartasIguales == ""){
+           todasCartasIguales = classList[2];
+         }else if(todasCartasIguales == classList[2])
+         {
+           sonIguales = true;
+           suma++;
+         }else{
+           sonIguales = false;
+         }
+
+       }
+      
+
+      if(sonIguales && suma == 3){
+        return true;
+      }else{
+        return false;
+      }
+
+    },
      tieneChancho(){
 
 
@@ -1223,7 +1249,7 @@ console.log(esteDeckardo.cards[39].i);
       
 
       if(sonIguales && suma == 3){
-        document.getElementById("btnChancho").style.display = "block";
+        document.getElementById("apretarChancho").style.display = "block";
       }
 
      },
