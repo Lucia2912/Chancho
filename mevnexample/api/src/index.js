@@ -96,7 +96,7 @@ existe = true;
   socket.join(data);
  
    io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
-   salas.push({idSala:data, conteoChancho:0, tieneChanchoJug1:[], tieneChanchoJug2:[], tieneChanchoJug3:[], tieneChanchoJug4:[], cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[]});
+   salas.push({idSala:data, conteoChancho:0, tieneChanchoJug1:[], tieneChanchoJug2:[], tieneChanchoJug3:[], tieneChanchoJug4:[], cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[], nombreMiembros:[]});
     socket.idSala = data;
   }else{
     socket.join(data);
@@ -115,7 +115,7 @@ socket.on('save-message', function (data) {
   io.sockets.emit('new-message', { message: data });
 });
 
-socket.on('getIdJugador', function(socket){
+socket.on('getIdJugador', function(socket, nickname){
   
 
 
@@ -132,6 +132,7 @@ socket.on('getIdJugador', function(socket){
   io.sockets.in(salas[i].idSala).emit("idJugador", idJugadore);
   idJugadore++;
   salas[i].idJugador = idJugadore;
+  salas[i].nombreMiembros.push(nickname);
   }
   salas[i].idMiembros.push(socket);
     } else {
@@ -185,7 +186,7 @@ let cuatroMano = mazardo.splice(0,4);
 let manoActuale = [unaMano, dosMano, tresMano, cuatroMano];
 let todosChanchos = [salas[i].tieneChanchoJug1, salas[i].tieneChanchoJug2, salas[i].tieneChanchoJug3, salas[i].tieneChanchoJug4]
 console.log(salas);
-          io.sockets.in(data.idSala).emit('repartirDespuesChancho', manoActuale, todosChanchos);
+          io.sockets.in(data.idSala).emit('repartirDespuesChancho', manoActuale, todosChanchos, salas[i].nombreMiembros);
         }
 
         }

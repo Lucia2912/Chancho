@@ -245,7 +245,7 @@ contadorTiempo--;
  
 }, 1000);*/
 
-this.socket.emit('getIdJugador', this.usuario._id);
+this.socket.emit('getIdJugador', this.usuario._id, this.usuario.nickname);
 
 let rutera =this.$route.params.sala;
   this.socket.on('idJugador',function(data){
@@ -859,7 +859,7 @@ if(!elQueCantoChancho){
 }
 });
 let nombreUsu = this.usuario.nickname;
-this.socket.on("repartirDespuesChancho", function(cartasRepartir, tablaPuntajeChanchos){
+this.socket.on("repartirDespuesChancho", function(cartasRepartir, tablaPuntajeChanchos, nickMiembros){
 
 //esteDeckardo.unmount();
 //esteDeckardo.mount(document.getElementById("container"));
@@ -1132,10 +1132,10 @@ for(let i = 0; i<tablaPuntajeChanchos[3].length; i++){
   puntajeJug4 = puntajeJug4+ tablaPuntajeChanchos[3][i];
 }
 
-var node = document.createTextNode(nombreUsu+": "+puntajeJug1);
-var node2 = document.createTextNode("Jugador 2: "+puntajeJug2);
-var node3 = document.createTextNode("Jugador 3: "+puntajeJug3);
-var node4 = document.createTextNode("Jugador 4: "+puntajeJug4);
+var node = document.createTextNode(nickMiembros[0]+" (Jugador 1): "+puntajeJug1);
+var node2 = document.createTextNode(nickMiembros[1]+" (Jugador 2): "+puntajeJug2);
+var node3 = document.createTextNode(nickMiembros[2]+" (Jugador 3): "+puntajeJug3);
+var node4 = document.createTextNode(nickMiembros[3]+" (Jugador 4): "+puntajeJug4);
 
 para.appendChild(node);
 para2.appendChild(node2);
@@ -1146,6 +1146,7 @@ otroModal.appendChild(para);
 otroModal.appendChild(para2);
 otroModal.appendChild(para3);
 otroModal.appendChild(para4);
+
 
 
 setTimeout(function(){
