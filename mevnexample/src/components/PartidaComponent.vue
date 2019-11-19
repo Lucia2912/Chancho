@@ -10,14 +10,11 @@
 
 
 <div id="myModal" class="modal" style="display: none;">
-
-  <!-- Modal content -->
   <div id="otroModal" class="modal-content">
     <span class="close">&times;</span>
-    <p>Tabla de puntajes</p>
   </div>
-
 </div>
+
 </div>
 
 
@@ -849,6 +846,11 @@ this.socket.on("totalArregloChancho", function(data){
 console.log("Este es el actual arreglo chancho "+data);
 });
 
+this.socket.on("finalizoPartida", function(data){
+
+console.log("La partida ha finalizado");
+
+});
 
 this.socket.on("botonChanchoMostrado", function(){
 if(!elQueCantoChancho){
@@ -858,6 +860,7 @@ if(!elQueCantoChancho){
   elQueCantoChancho = false;
 }
 });
+
 let nombreUsu = this.usuario.nickname;
 this.socket.on("repartirDespuesChancho", function(cartasRepartir, tablaPuntajeChanchos, nickMiembros){
 
@@ -1110,6 +1113,7 @@ var otroModal = document.getElementById("otroModal");
 var span = document.getElementsByClassName("close")[0];
 modal.style.display = "block";
 
+var titulo = document.createElement("p");
 var para = document.createElement("p");
 var para2 = document.createElement("p");
 var para3 = document.createElement("p");
@@ -1132,16 +1136,19 @@ for(let i = 0; i<tablaPuntajeChanchos[3].length; i++){
   puntajeJug4 = puntajeJug4+ tablaPuntajeChanchos[3][i];
 }
 
+var nodeTitulo = document.createTextNode("Tabla de puntajes");
 var node = document.createTextNode(nickMiembros[0]+" (Jugador 1): "+puntajeJug1);
 var node2 = document.createTextNode(nickMiembros[1]+" (Jugador 2): "+puntajeJug2);
 var node3 = document.createTextNode(nickMiembros[2]+" (Jugador 3): "+puntajeJug3);
 var node4 = document.createTextNode(nickMiembros[3]+" (Jugador 4): "+puntajeJug4);
 
+titulo.appendChild(nodeTitulo);
 para.appendChild(node);
 para2.appendChild(node2);
 para3.appendChild(node3);
 para4.appendChild(node4);
 
+otroModal.appendChild(titulo);
 otroModal.appendChild(para);
 otroModal.appendChild(para2);
 otroModal.appendChild(para3);
@@ -1151,14 +1158,14 @@ otroModal.appendChild(para4);
 
 setTimeout(function(){
   modal.style.display = "none";
-  $('#myModal p').empty();
+  $('#otroModal').empty();
  }, 5000);
-// When the user clicks on <span> (x), close the modal
+/*
 span.onclick = function() {
   modal.style.display = "none";
    $('#myModal div').empty();
 }
-
+*/
 
 
 });
@@ -1173,7 +1180,7 @@ span.onclick = function() {
 
      },
      apretaAlChancho(){
-
+//hacer chequeo 
        if(this.tenesCartasIguales()){
          this.socket.emit("mostraElBotonChancho", this.$route.params.sala);
          elQueCantoChancho = true;
@@ -1251,6 +1258,8 @@ span.onclick = function() {
 
       if(sonIguales && suma == 3){
         document.getElementById("apretarChancho").style.display = "block";
+      }else{
+        document.getElementById("apretarChancho").style.display = "none";
       }
 
      },
