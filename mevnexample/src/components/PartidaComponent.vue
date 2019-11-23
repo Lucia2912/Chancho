@@ -2,7 +2,7 @@
 
 <div>
 <div id="container"></div>
-<button @click="moverCarta">Mover</button>
+<button id="btnMover" @click="moverCarta">Mover</button>
 <button id="btnChancho" @click="cantarChancho" style="display: none;">Tenes Chancho!</button>
 <button style="display: none;" @click="apretaAlChancho" id="apretarChancho">Chancho!!</button>
 
@@ -836,7 +836,7 @@ cartaJugador2.animateTo({
 
 
 
-
+ document.getElementById("btnMover").style.display = "block";
 
 
 
@@ -1260,6 +1260,8 @@ span.onclick = function() {
         document.getElementById("apretarChancho").style.display = "block";
       }else{
         document.getElementById("apretarChancho").style.display = "none";
+        
+      
       }
 
      },
@@ -1284,7 +1286,7 @@ this.socket.emit('moverCarta',{palo: cartaElegidosa.suit, valor: cartaElegidosa.
 //por aca pasa una vez
 
 
-
+  document.getElementById("btnMover").style.display = "none";
 
 //this.deck = esteDeckito;
 
