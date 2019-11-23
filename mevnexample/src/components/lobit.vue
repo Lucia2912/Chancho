@@ -221,7 +221,10 @@ margin-top: 10px;
 .chat-room-head .search-btn:focus::-moz-placeholder {
     color: #fff;
 }
+body{
+    overflow: auto;
 
+}
 ul.chat-list li a {
     color: #6a6a6a;
     display: block;

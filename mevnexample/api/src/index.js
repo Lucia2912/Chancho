@@ -96,7 +96,7 @@ existe = true;
   socket.join(data);
  
    io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
-   salas.push({idSala:data, conteoChancho:0, tieneChanchoJug1:[], tieneChanchoJug2:[], tieneChanchoJug3:[], tieneChanchoJug4:[], cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[]});
+   salas.push({idSala:data, conteoChancho:0, primeroCantarChancho:0, tieneChanchoJug1:[], tieneChanchoJug2:[], tieneChanchoJug3:[], tieneChanchoJug4:[], cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[], nombreMiembros:[]});
     socket.idSala = data;
   }else{
     socket.join(data);
@@ -115,7 +115,7 @@ socket.on('save-message', function (data) {
   io.sockets.emit('new-message', { message: data });
 });
 
-socket.on('getIdJugador', function(socket){
+socket.on('getIdJugador', function(socket, nickname){
   
 
 
@@ -132,6 +132,7 @@ socket.on('getIdJugador', function(socket){
   io.sockets.in(salas[i].idSala).emit("idJugador", idJugadore);
   idJugadore++;
   salas[i].idJugador = idJugadore;
+  salas[i].nombreMiembros.push(nickname);
   }
   salas[i].idMiembros.push(socket);
     } else {
@@ -183,8 +184,24 @@ let dosMano = mazardo.splice(0,4);
 let tresMano = mazardo.splice(0,4);
 let cuatroMano = mazardo.splice(0,4);
 let manoActuale = [unaMano, dosMano, tresMano, cuatroMano];
-console.log("esta es la mano atual "+manoActuale);
-          io.sockets.in(data.idSala).emit('repartirDespuesChancho', manoActuale);
+
+let chanchero1 = salas[i].tieneChanchoJug1;
+let chanchero2 = salas[i].tieneChanchoJug2;
+let chanchero3 = salas[i].tieneChanchoJug3;
+let chanchero4 = salas[i].tieneChanchoJug4;
+
+if(chanchero1.length == 7 || chanchero2.length == 7 || chanchero3.length == 7 || chanchero4.length == 7){
+
+  io.sockets.in(data.idSala).emit("finalizoPartida");
+
+}else{
+
+let todosChanchos = [salas[i].tieneChanchoJug1, salas[i].tieneChanchoJug2, salas[i].tieneChanchoJug3, salas[i].tieneChanchoJug4]
+console.log(salas);
+salas[i].primeroCantarChancho = 0;
+  io.sockets.in(data.idSala).emit('repartirDespuesChancho', manoActuale, todosChanchos, salas[i].nombreMiembros);
+      
+        }
         }
 
         }
@@ -198,7 +215,17 @@ console.log("esta es la mano atual "+manoActuale);
 
     socket.on('mostraElBotonChancho', function(idSala){
 
-      io.sockets.in(idSala).emit('botonChanchoMostrado');
+
+      for(let i = 0; i<salas.length; i++){
+        if(salas[i].idSala == idSala){
+
+          if(salas[i].primeroCantarChancho == 0){
+          io.sockets.in(idSala).emit('botonChanchoMostrado');
+          salas[i].primeroCantarChancho = 1;
+        }
+        }
+      }
+    
     });
 
 
