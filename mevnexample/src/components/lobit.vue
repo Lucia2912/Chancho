@@ -12,10 +12,16 @@
                 <!-- start:aside lobby tengah -->
                 <aside class="tengah-side">
                     <div class="room-desk">
-                        <h4 class="pull-left">Sala de espera</h4>
+                        <h2 class="pull-left">Sala de espera</h2>
+                        <div class="row">
          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
 Crear sala
-</button>       
+</button>  
+<div class="col-md-4"></div>  
+ <div class="col-md-4">
+    <input v-model="search" placeholder="Buscar sala" class="form-control mr-sm-2" type="search"/>
+</div>
+                        </div>
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -43,7 +49,7 @@ Crear sala
 </div>
                    
                    <div>
-                         <div v-for="salita in salitas" :key="salita._id" class="room-box">
+                         <div v-for="salita in filteredSala" :key="salita._id" class="room-box" v-chat-scroll>
                             <h5 ><span class="text-muted">Nombre: </span><a href="#chat-room.html">{{ salita.Nombre }}</a> </h5>
                             <h5 class="cortito"><span class="text-muted">Descripcion: </span> {{ salita.Descripcion }} </h5>
                            
@@ -510,6 +516,7 @@ export default {
             rooms:[],
             socket: io(json.IP + json.PORT),
             Jugadores: [],
+            search: "",
             hasErrors: {
                 nombre: false
             },
@@ -596,5 +603,12 @@ export default {
         this.errors.push(e)
       })
     },
+     computed: {
+    filteredSala: function() {
+      return this.salitas.filter(sala => {
+        return sala.Nombre.toUpperCase().match(this.search.toUpperCase()) || sala.Creador.nickname.toUpperCase().match(this.search.toUpperCase());
+      });
+    }
+  }
 };
 </script>

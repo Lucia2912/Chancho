@@ -65,7 +65,7 @@ salas.post('/crear', (req, res) => {
 });
 
 salas.get('/listar', (req, res) => {
-    Sala.find({}, function (err, salas) {
+    Sala.find({Estado: "En espera"}, function (err, salas) {
         User.populate(salas, { path: "Creador" }, function (err, salas) {
             User.populate(salas, { path: "Miembros" }, function (err, salas) {
                 res.status(200).send(salas);

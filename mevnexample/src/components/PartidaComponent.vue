@@ -19,7 +19,6 @@ import jwtDecode from 'jwt-decode';
 import Deck from 'deck-of-cards/dist/deck';
 import json from '../../environments/env.json';
 import io from 'socket.io-client';
-import firstImpression from 'deck-of-cards/dist/firstImpression.js';
 
 let cartaElegidosa;
 let idJugadoroso;
