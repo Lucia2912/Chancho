@@ -191,8 +191,22 @@ let chanchero3 = salas[i].tieneChanchoJug3;
 let chanchero4 = salas[i].tieneChanchoJug4;
 
 if(chanchero1.length == 7 || chanchero2.length == 7 || chanchero3.length == 7 || chanchero4.length == 7){
-
-  io.sockets.in(data.idSala).emit("finalizoPartida");
+  if(chanchero1.length == 7){
+    let ganador = salas[i].idMiembros[0];
+    io.sockets.in(data.idSala).emit("finalizoPartida", ganador);
+  }
+  if(chanchero2.length == 7){
+    let ganador = salas[i].idMiembros[1];
+    io.sockets.in(data.idSala).emit("finalizoPartida", ganador);
+  }
+  if(chanchero3.length == 7){
+    let ganador = salas[i].idMiembros[2];
+    io.sockets.in(data.idSala).emit("finalizoPartida", ganador);
+  }
+  if(chanchero4.length == 7){
+    let ganador = salas[i].idMiembros[4];
+    io.sockets.in(data.idSala).emit("finalizoPartida", ganador);
+  }
 
 }else{
 
