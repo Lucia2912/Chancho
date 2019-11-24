@@ -51,7 +51,7 @@ let io = require("socket.io")(server, {
   }
 });
 
-let mazito = [0,13,26,39,1,14,27,40,2,15,28,41,3,16,29,42];
+
 
 function mezclar(array) {
   for (let i = array.length - 1; i > 0; i--) {
@@ -59,13 +59,7 @@ function mezclar(array) {
     [array[i], array[j]] = [array[j], array[i]];
   }
 }
-mezclar(mazito);
-mezclar(mazito);
 
-let ases = mazito.splice(0,4);
-let dos = mazito.splice(0,4);
-let tres = mazito.splice(0,4);
-let cuatro = mazito.splice(0,4);
 
 let idJugador = 0;
 
@@ -96,7 +90,16 @@ existe = true;
   socket.join(data);
  
    io.sockets.in(data).emit('mensaje', 'esta es la sala '+data);
-   salas.push({idSala:data, conteoChancho:0, primeroCantarChancho:0, tieneChanchoJug1:[], tieneChanchoJug2:[], tieneChanchoJug3:[], tieneChanchoJug4:[], cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[], nombreMiembros:[]});
+   let mazito = [0,13,26,39,1,14,27,40,2,15,28,41,3,16,29,42];
+   mezclar(mazito);
+   mezclar(mazito);
+   
+   let ases = mazito.splice(0,4);
+   let dos = mazito.splice(0,4);
+   let tres = mazito.splice(0,4);
+   let cuatro = mazito.splice(0,4);
+   let manoActual = [ases, dos, tres, cuatro];
+   salas.push({idSala:data, manoActualSala:manoActual, conteoChancho:0, primeroCantarChancho:0, tieneChanchoJug1:[], tieneChanchoJug2:[], tieneChanchoJug3:[], tieneChanchoJug4:[], cartaJugador1:[], cartaJugador2:[], cartaJugador3:[],cartaJugador4:[], idJugador:0, cuatroJugMovieron:0, idMiembros:[], nombreMiembros:[]});
     socket.idSala = data;
   }else{
     socket.join(data);
@@ -145,11 +148,16 @@ socket.on('getIdJugador', function(socket, nickname){
 }
 });
 
-let manoActual = [ases, dos, tres, cuatro];
+
     socket.on('tieneId', function(idSala){
   //	io.sockets.emit('cartasJugador',manoActual);
 
-  io.sockets.in(idSala).emit('cartasJugador', manoActual, idSala);
+  for(let i = 0; i<salas.length; i++){
+    if(salas[i].idSala == idSala){
+      io.sockets.in(idSala).emit('cartasJugador', salas[i].manoActualSala, idSala);
+    }
+  }
+ 
     });
 
 
