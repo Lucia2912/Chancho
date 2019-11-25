@@ -585,7 +585,8 @@ export default {
             if (err.data) {
                   if (err.data.errors.nombre) {
                     vm.nombre = true;
-                    _vm.nombre = "El nombre de la sala se encuentra en uso";
+                    _vm.nombre = err.data.errors.nombre;
+                    console.log(err.data.errors.nombre);
                     setTimeout(function() {
                       vm.nombre = false;
                       _vm.nombre = null;

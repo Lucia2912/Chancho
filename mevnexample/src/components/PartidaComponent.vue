@@ -848,7 +848,8 @@ console.log("Este es el actual arreglo chancho "+data);
 this.socket.on("finalizoPartida", function(data){
 console.log("Ganador: "+data);
 console.log("La partida ha finalizado");
-let uri = json.IP + json.PORT + `sala/finalizo/${this.$route.params.sala}`;
+let idSalaFin = this.$route.params.sala;
+let uri = json.IP + json.PORT + `sala/finalizo/${idSalaFin}`;
 this.axios.post(uri, {Ganador: data}).then(res => {
   this.$router.push({name: 'lobby'});
 })

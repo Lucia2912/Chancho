@@ -96,6 +96,7 @@ salas.post('/crear', (req, res) => {
                                     res.send('error: ' + err);
                                 })
                             } else {
+                            console.log("Ya existe con ese nombre");
                             let errores = { errors: { nombre: 'Ya existe una sala con ese nombre' } };
                             res.setHeader('Content-Type', 'application/json');
                             res.statusCode = 422;
@@ -107,6 +108,7 @@ salas.post('/crear', (req, res) => {
                         res.send('error: ' + err);
                     });
             } else {
+                console.log("Ya tiene una sala creada en espera");
                 let errores = { errors: { nombre: 'Ya tienes una sala creada' } };
                 res.setHeader('Content-Type', 'application/json');
                 res.statusCode = 422;
@@ -135,6 +137,7 @@ salas.post('/crear', (req, res) => {
                                 res.send('error: ' + err);
                             })
                         } else {
+                            console.log("Ya existe con ese nombre");
                         let errores = { errors: { nombre: 'Ya existe una sala con ese nombre' } };
                         res.setHeader('Content-Type', 'application/json');
                         res.statusCode = 422;
@@ -151,7 +154,7 @@ salas.post('/crear', (req, res) => {
 });
 
 salas.get('/listar', (req, res) => {
-    Sala.find({Estado: "En espera"}, function (err, salas) {
+    Sala.find({Estado: "En espera", Estado: "Completa"}, function (err, salas) {
         User.populate(salas, { path: "Creador" }, function (err, salas) {
             User.populate(salas, { path: "Miembros" }, function (err, salas) {
                 res.status(200).send(salas);
