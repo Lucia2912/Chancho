@@ -207,6 +207,7 @@ if(chanchero1.length == 7 || chanchero2.length == 7 || chanchero3.length == 7 ||
 let todosChanchos = [salas[i].tieneChanchoJug1, salas[i].tieneChanchoJug2, salas[i].tieneChanchoJug3, salas[i].tieneChanchoJug4]
 console.log(salas);
 salas[i].primeroCantarChancho = 0;
+io.sockets.in(data.idSala).emit('setearTodoACero');
   io.sockets.in(data.idSala).emit('repartirDespuesChancho', manoActuale, todosChanchos, salas[i].nombreMiembros);
       
         }
@@ -235,6 +236,18 @@ salas[i].primeroCantarChancho = 0;
       }
     
     });
+
+    socket.on('alguienCantoChancho', function(idSala){
+
+      for(let i = 0; i<salas.length; i++){
+        if(salas[i].idSala == idSala){
+
+          io.sockets.in(idSala).emit('hayChanchoCantado', salas[i].primeroCantarChancho);
+        }
+      }
+
+    });
+
 
 
     socket.on('moverCarta', function(data){

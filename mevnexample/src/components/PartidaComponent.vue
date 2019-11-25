@@ -34,6 +34,7 @@ let cartaElegidosa;
 let idJugadoroso;
 let divoso;
 let elQueCantoChancho = false;
+let elQueCantoChanchoBackend = 0;
 let esteDeckardo;
 
 let socketardo = io('localhost:4000');
@@ -195,7 +196,7 @@ export default {
  created(){
    $('body').removeClass('modal-open');
    $('.modal-backdrop').remove();
-   console.log(this.$route.params.sala);
+  
    },
    beforeUpdate(){
    this.socket.off("cartasJugador");
@@ -843,8 +844,22 @@ cartaJugador2.animateTo({
 });
 
 this.socket.on("totalArregloChancho", function(data){
-console.log("Este es el actual arreglo chancho "+data);
+
 });
+
+
+this.socket.on("hayChanchoCantado", function(seCantoONo){
+
+console.log("hay chancho o no");
+console.log(seCantoONo);
+elQueCantoChanchoBackend = seCantoONo;
+});
+
+this.socket.on("setearTodoACero",function(){
+
+elQueCantoChanchoBackend = 0;
+});
+
 
 this.socket.on("finalizoPartida", function(data){
 
@@ -916,7 +931,7 @@ let contador = 0;
           y: 10,
           onComplete: function onComplete(){
              seleccionarCarta(10, false);
-                console.log("complete g:"+g+" contador:"+contador+" jug"+1);
+                
           }
         });
         
@@ -1047,8 +1062,6 @@ nuevasCardsJug3[g].setSide('front');
   contador = contador + 60;
 
 }
-console.log("cartas despues");
-  console.log(esteDeckardo.cards);
 
 }else if(idJugadoroso == 3){
 
@@ -1181,11 +1194,15 @@ span.onclick = function() {
      },
      apretaAlChancho(){
 //hacer chequeo 
-       if(this.tenesCartasIguales()){
+
+
+    
+
+       if(this.tenesCartasIguales() && elQueCantoChanchoBackend == 0){
          this.socket.emit("mostraElBotonChancho", this.$route.params.sala);
          elQueCantoChancho = true;
        }
-       
+       this.socket.emit("alguienCantoChancho", this.$route.params.sala);
        esteDeckardo.sort();
 
  esteDeckardo.cards.forEach(function (card, i) {
